@@ -8,7 +8,7 @@ public class PlanoDeUso
     public string NomePlano { get; set; }
     public decimal Valor { get; set; }
 
-    public PlanoDeUso(int id,string nomePlano, decimal valor)
+    public PlanoDeUso(int id, string nomePlano, decimal valor)
     {
         Id = id;
         NomePlano = nomePlano;
