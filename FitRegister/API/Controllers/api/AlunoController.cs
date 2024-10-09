@@ -15,28 +15,29 @@ namespace API.Controllers.api
             _context = context;
         }
 
-        // Cadastrar Aluno
         [HttpPut("cadastrar")]
-        public IActionResult Cadastrar([FromBody] Aluno aluno,[FromBody] String idPlano)
+        public IActionResult Cadastrar([FromBody] Aluno aluno, [FromQuery] string idPlano)
         {
             if (aluno == null)
             {
                 return BadRequest("Aluno não pode ser nulo.");
             }
-            
 
-            var plano = _context.Planos.Find(idPlano);
+            // Aqui você pode usar o idPlano para vincular o aluno a um plano, por exemplo:
+            var plano = _context.Planos.FirstOrDefault(p => p.Id.Equals (idPlano));
             if (plano == null)
             {
                 return NotFound("Plano não encontrado.");
             }
 
-            aluno.SetPlanoDeUso(plano);
+            aluno.SetPlanoDeUso(plano);  // Atribuir o plano ao aluno
+
             _context.Alunos.Add(aluno);
             _context.SaveChanges();
+            
             return CreatedAtAction(nameof(Buscar), new { id = aluno.Id }, aluno);
         }
-
+        
         // Listar Alunos
         [HttpGet("listar")]
         public ActionResult<List<Aluno>> Listar()

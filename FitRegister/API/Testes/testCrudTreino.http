@@ -3,40 +3,40 @@ PUT http://localhost:5199/api/treino/cadastrar
 Content-Type: application/json
 
 {
-    "descricao": "Treino de Resistência",
+    "descricao": "Treino Peito",
     "duracaoEmDias": 30
 }
 
-##LISTAR TRIENOS
+###LISTAR TRIENOS
 GET http://localhost:5199/api/treino/listar
 
-#BUSCAR TRIENO POR ID
+###BUSCAR TRIENO POR ID
 POST http://localhost:5199/api/treino/buscar
 Content-Type: application/json
 
-"1"  // Substitua pelo ID do treino
+"2"
 
-#REMOVER TREINO 
+###REMOVER TREINO 
 DELETE http://localhost:5199/api/treino/remover
 Content-Type: application/json
 
-"1"  // Substitua pelo ID do treino
+"1"
 
-##ALTERAR DADOS DO TRINEO TOTAL
+###ALTERAR DADOS DO TRINEO TOTAL
 PUT http://localhost:5199/api/treino/alterar
 Content-Type: application/json
 
 {
-   "Id": 1,  // Substitua pelo ID do treino
-   "descricao": "Treino de Força",
-   "duracaoEmDias": 60
+    "id": 2,
+    "descricao": "Treino Avançado",
+    "duracaoEmDias": 30
 }
 
-##ALTERAR DADOS DO TREINO PARCIAL
+###ALTERAR DADOS DO TREINO PARCIAL
 PUT http://localhost:5199/api/treino/alterar
 Content-Type: application/json
 
 {
-   "id": 1,  // Substitua pelo ID do treino
-   "descricao": "Novo Treino"
+    "id": 2,
+    "duracaoEmDias": 10
 }

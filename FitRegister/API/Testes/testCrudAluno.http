@@ -1,5 +1,5 @@
-### CADASTRAR 
-PUT http://localhost:5199/api/aluno/cadastrar
+### CADASTRAR #DADOS OBRIGAGORIOS
+PUT http://localhost:5199/api/aluno/cadastrar?idPlano=123e4567-e89b-12d3-a456-426614174000
 Content-Type: application/json
 
 {
@@ -8,10 +8,6 @@ Content-Type: application/json
     "telefone": "41 998765432",
     "login": "joao.silva@gmail.com",
     "senha": "joao1234"
-}
-
-{
-   "Id": "158b96d5-af56-4b44-94dd-30fca7cb5389"
 }
 
 ### LISTAR 

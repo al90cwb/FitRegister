@@ -65,17 +65,19 @@ namespace API.Controllers.api
 
         // Alterar Treino
         [HttpPut("alterar")]
-        public IActionResult Alterar([FromBody] Treino treinoAtualizado)
+        public IActionResult Alterar([FromBody] Treino? treinoAtualizado)
         {
             var treino = _context.Treinos.Find(treinoAtualizado.Id);
             if (treino == null)
             {
                 return NotFound();
             }
-
-            treino.Descricao = treinoAtualizado.Descricao;
-            treino.DuracaoEmDias = treinoAtualizado.DuracaoEmDias;
-
+            if (treinoAtualizado.Descricao!=null){
+                treino.Descricao = treinoAtualizado.Descricao;
+            }
+            if(treinoAtualizado.DuracaoEmDias!=null){
+                treino.DuracaoEmDias = treinoAtualizado.DuracaoEmDias;
+            }
             _context.SaveChanges();
             return Ok(treino);
         }
