@@ -1,0 +1,49 @@
+### CADASTRAR #DADOS OBRIGAGORIOS
+PUT http://localhost:5199/api/aluno/cadastrar?idPlano=123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+
+{
+    "nome": "João Silva",
+    "endereco": "Rua das Orquídeas, 10",
+    "telefone": "41 998765432",
+    "login": "joao.silva@gmail.com",
+    "senha": "joao1234"
+}
+
+### LISTAR 
+GET http://localhost:5199/api/aluno/listar
+
+### BUSCAR 
+POST http://localhost:5199/api/aluno/buscar
+Content-Type: application/json
+
+"a51e228f-189e-4a5c-94f1-be30488f475f"
+
+### REMOVER 
+DELETE http://localhost:5199/api/aluno/remover
+Content-Type: application/json
+
+"a51e228f-189e-4a5c-94f1-be30488f475f"
+
+
+### ALTERAR DADOS ALUNO TOTAL
+PUT http://localhost:5199/api/aluno/alterarDadosAluno
+Content-Type: application/json
+
+{
+   "Id": "158b96d5-af56-4b44-94dd-30fca7cb5389",
+   "nome": "Carlos Almeida",
+   "endereco": "Rua das Flores, 22",
+   "telefone": "41 987654321",
+   "login": "carlos.almeida@gmail.com",
+   "senha": "carlos1234"
+}
+
+### ALTERAR DADOS ALUNO PARCIAL
+PUT http://localhost:5199/api/aluno/alterarDadosAluno
+Content-Type: application/json
+
+{
+   "id": "158b96d5-af56-4b44-94dd-30fca7cb5389",
+   "nome": "Novo Nome"
+}
