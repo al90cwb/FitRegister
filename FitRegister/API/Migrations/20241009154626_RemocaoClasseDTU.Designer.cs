@@ -3,6 +3,7 @@ using System;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20241009154626_RemocaoClasseDTU")]
+    partial class RemocaoClasseDTU
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -29,15 +32,12 @@ namespace API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Endereco")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Login")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("PlanoId")
@@ -51,7 +51,6 @@ namespace API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Telefone")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("TreinoDomingoId")
@@ -98,7 +97,7 @@ namespace API.Migrations
                     b.ToTable("Alunos");
                 });
 
-            modelBuilder.Entity("API.Models.Plano", b =>
+            modelBuilder.Entity("API.Models.PlanoDeUso", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,7 +112,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Planos");
+                    b.ToTable("PlanoDeUso");
                 });
 
             modelBuilder.Entity("API.Models.Professor", b =>
@@ -125,22 +124,18 @@ namespace API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Endereco")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Login")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Senha")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Telefone")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -163,13 +158,13 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Treinos");
+                    b.ToTable("Treino");
                 });
 
             modelBuilder.Entity("API.Models.Aluno", b =>
                 {
-                    b.HasOne("API.Models.Plano", "Plano")
-                        .WithMany("Alunos")
+                    b.HasOne("API.Models.PlanoDeUso", "Plano")
+                        .WithMany()
                         .HasForeignKey("PlanoId");
 
                     b.HasOne("API.Models.Professor", "Professor")
@@ -223,11 +218,6 @@ namespace API.Migrations
                     b.Navigation("TreinoSexta");
 
                     b.Navigation("TreinoTerca");
-                });
-
-            modelBuilder.Entity("API.Models.Plano", b =>
-                {
-                    b.Navigation("Alunos");
                 });
 
             modelBuilder.Entity("API.Models.Professor", b =>

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Models;
 
@@ -12,7 +13,8 @@ public class Aluno : Usuario
     public Treino?  TreinoSabado { get; set; }
     public Treino?  TreinoDomingo { get; set; }
     public DateTime?  DataDuracao { get; set; }
-    public PlanoDeUso?  Plano { get; set; }
+    public Plano?  Plano { get; set; }
+    [Required(ErrorMessage = "E necesário escolher um plano para concluir o cadastro.")]
     public Professor?  Professor { get; set; } // Agora o Aluno possui um Professor
 
     public Aluno(string nome, string endereco, string telefone, string login, string senha)
@@ -20,15 +22,27 @@ public class Aluno : Usuario
     {
     }
 
-    public void SetPlanoDeUso(PlanoDeUso plano)
+    public void SetPlanoDeUso(Plano plano)
     {
         this.Plano = plano;
     }
-
+    public void AlteraPlanoDeUso(Plano plano)
+    {
+        this.Plano.Alunos.Remove(this);
+        this.Plano = plano;
+        this.Plano.Alunos.Add(this);
+    }
     public void SetProfessor(Professor professor)
     {
         Professor = professor;
         Professor.Alunos.Add(this); // Adiciona o aluno à lista de alunos do professor
+    }
+
+    public void AlteraProfessor(Professor professor)
+    {
+        this.Professor.Alunos.Remove(this);
+        this.Professor = professor;
+        this.Professor.Alunos.Add(this);
     }
 
     public void RemoveProfessor()

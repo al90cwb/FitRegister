@@ -17,13 +17,21 @@ namespace API.Controllers.api
 
         // Cadastrar Aluno
         [HttpPut("cadastrar")]
-        public IActionResult Cadastrar([FromBody] Aluno aluno)
+        public IActionResult Cadastrar([FromBody] Aluno aluno,[FromBody] String idPlano)
         {
             if (aluno == null)
             {
                 return BadRequest("Aluno não pode ser nulo.");
             }
+            
 
+            var plano = _context.Planos.Find(idPlano);
+            if (plano == null)
+            {
+                return NotFound("Plano não encontrado.");
+            }
+
+            aluno.SetPlanoDeUso(plano);
             _context.Alunos.Add(aluno);
             _context.SaveChanges();
             return CreatedAtAction(nameof(Buscar), new { id = aluno.Id }, aluno);
@@ -64,8 +72,8 @@ namespace API.Controllers.api
         }
 
         // Alterar Aluno
-        [HttpPut("alterar")]
-        public IActionResult Alterar([FromBody] AlunoUpdateDTO alunoDto)
+        [HttpPut("alterarDadosAluno")]
+        public IActionResult Alterar([FromBody] Aluno alunoDto)
         {
             if (alunoDto == null || string.IsNullOrEmpty(alunoDto.Id))
             {

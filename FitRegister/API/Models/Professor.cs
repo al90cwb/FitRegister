@@ -41,9 +41,10 @@ public class Professor : Usuario
         }
     }
 
-    public void CadastrarPlanoAluno(PlanoDeUso plano, Aluno aluno)
+    public void CadastrarPlanoAluno(Plano plano, Aluno aluno)
     {
         aluno.Plano = plano;
+        plano.Alunos.Add(aluno);
     }
 
 }

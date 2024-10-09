@@ -10,6 +10,10 @@ Content-Type: application/json
     "senha": "joao1234"
 }
 
+{
+   "Id": "158b96d5-af56-4b44-94dd-30fca7cb5389"
+}
+
 ### LISTAR 
 GET http://localhost:5199/api/aluno/listar
 
@@ -26,8 +30,8 @@ Content-Type: application/json
 "a51e228f-189e-4a5c-94f1-be30488f475f"
 
 
-### ALTERAR POR ID
-PUT http://localhost:5199/api/aluno/alterar
+### ALTERAR DADOS ALUNO TOTAL
+PUT http://localhost:5199/api/aluno/alterarDadosAluno
 Content-Type: application/json
 
 {
@@ -39,8 +43,8 @@ Content-Type: application/json
    "senha": "carlos1234"
 }
 
-### ALTERAR PROFESSOR POR ID PARCIAL
-PUT http://localhost:5199/api/aluno/alterar
+### ALTERAR DADOS ALUNO PARCIAL
+PUT http://localhost:5199/api/aluno/alterarDadosAluno
 Content-Type: application/json
 
 {

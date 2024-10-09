@@ -65,7 +65,7 @@ namespace API.Controllers.api
 
         // Alterar Professor
         [HttpPut("alterar")]
-        public IActionResult Alterar([FromBody] ProfessorUpdateDTO professor)
+        public IActionResult Alterar([FromBody] Professor professor)
         {
             Professor? professorbusca = _context.Professores.FirstOrDefault(p => p.Id == professor.Id);
 
