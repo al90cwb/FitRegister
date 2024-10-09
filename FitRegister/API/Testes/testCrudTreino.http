@@ -3,7 +3,7 @@ PUT http://localhost:5199/api/treino/cadastrar
 Content-Type: application/json
 
 {
-    "descricao": "Treino Peito",
+    "descricao": "Treino Abdominal",
     "duracaoEmDias": 30
 }
 

@@ -3,24 +3,24 @@ PUT http://localhost:5199/api/plano/cadastrar
 Content-Type: application/json
 
 {
-    "nomePlano": "Plano Premium",
-    "valor": 150.00
+    "nomePlano": "Plano Personal",
+    "valor": 350.00
 }
 
 ###LISTAR PLANO 
 GET http://localhost:5199/api/plano/listar
 
 ###BUSCAR PLANO POR ID
-POST http://localhost:5199/api/plano/buscar
+GET http://localhost:5199/api/plano/buscar
 Content-Type: application/json
 
-"1"  // Substitua pelo ID do plano
+"1"
 
 ###REMOVER PLANO
 DELETE http://localhost:5199/api/plano/remover
 Content-Type: application/json
 
-"1"  // Substitua pelo ID do plano
+"4"
 
 ###ALTERAR DADOS DO PLANO TOTAL
 PUT http://localhost:5199/api/plano/alterar

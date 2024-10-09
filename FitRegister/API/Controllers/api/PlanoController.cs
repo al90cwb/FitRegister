@@ -16,7 +16,7 @@ namespace API.Controllers.api
         }
 
         // Cadastrar Plano
-        [HttpPost("cadastrar")]
+        [HttpPut("cadastrar")]
         public IActionResult Cadastrar([FromBody] Plano plano)
         {
             if (plano == null)
@@ -38,8 +38,8 @@ namespace API.Controllers.api
         }
 
         // Buscar Plano por ID
-        [HttpGet("buscar/{id}")]
-        public IActionResult Buscar(int id)
+        [HttpGet("buscar")]
+        public IActionResult Buscar([FromBody] int id)
         {
             var plano = _context.Planos.Find(id);
             if (plano == null)
@@ -50,8 +50,8 @@ namespace API.Controllers.api
         }
 
         // Remover Plano
-        [HttpDelete("remover/{id}")]
-        public IActionResult Remover(int id)
+        [HttpDelete("remover")]
+        public IActionResult Remover([FromBody] int id)
         {
             var plano = _context.Planos.Find(id);
             if (plano == null)
@@ -65,18 +65,21 @@ namespace API.Controllers.api
         }
 
         // Alterar Plano
-        [HttpPut("alterar/{id}")]
-        public IActionResult Alterar(int id, [FromBody] Plano planoAlterado)
+        [HttpPut("alterar")]
+        public IActionResult Alterar([FromBody] Plano planoAlterado)
         {
-            var planoExistente = _context.Planos.Find(id);
+            var planoExistente = _context.Planos.Find(planoAlterado.Id);
             if (planoExistente == null)
             {
                 return NotFound("Plano não encontrado.");
             }
 
-            // Atualiza as propriedades do plano
-            planoExistente.NomePlano = planoAlterado.NomePlano;
-            planoExistente.Valor = planoAlterado.Valor;
+            if( planoAlterado.NomePlano!=null){
+                planoExistente.NomePlano = planoAlterado.NomePlano;
+            }
+            if(planoAlterado.Valor!=null){
+                planoExistente.Valor = planoAlterado.Valor;
+            }
 
             _context.SaveChanges();
             return Ok(planoExistente);
