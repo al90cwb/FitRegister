@@ -4,16 +4,16 @@ namespace API.Models;
 
 public class Treino
 {
-    public int Id { get; set; }
-    public string? Descricao { get; set; }
-    public int? DuracaoEmDias { get; set; } // Duração do treino
-   // public List<Aluno> Alunos { get; set; } = new List<Aluno>();
+    public string? Id { get; set; }
+    public string Descricao { get; set; }
+    public int DuracaoEmDias { get; set; }
+    public List<Aluno>? Alunos { get; set; } 
 
-    public Treino() { }
-    public Treino(int id, string descricao, int duracaoEmDias)
+    public Treino( string descricao, int duracaoEmDias)
     {
-        Id = id;
+        Id = Guid.NewGuid().ToString();
         Descricao = descricao;
         DuracaoEmDias = duracaoEmDias;
+        Alunos = new List<Aluno>();
     }
 }

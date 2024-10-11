@@ -17,16 +17,18 @@ namespace API.Controllers.api
 
         // Cadastrar Professor
         [HttpPut("cadastrar")]
-        public IActionResult Cadastrar([FromBody] Professor professor)
+        public IActionResult Cadastrar([FromBody] UsuarioUpdt professor)
         {
             if (professor == null)
             {
                 return BadRequest("Professor não pode ser nulo.");
             }
 
-            _context.Professores.Add(professor);
+            Professor professorNovo = new Professor(professor.Nome,professor.Endereco,professor.Telefone,professor.Login,professor.Senha);
+
+            _context.Professores.Add(professorNovo);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(Buscar), new { id = professor.Id }, professor);
+            return Ok(professorNovo);
         }
 
         // Listar Professores
@@ -40,7 +42,7 @@ namespace API.Controllers.api
         [HttpPost("buscar")]
         public ActionResult<Professor> Buscar([FromBody] string id)
         {
-            var professor = _context.Professores.FirstOrDefault(p => p.Id == id);
+            var professor = _context.Professores.FirstOrDefault(p => p.Id.Equals(id));
             if (professor == null)
             {
                 return NotFound(new { Message = "Professor não encontrado" });
@@ -52,7 +54,7 @@ namespace API.Controllers.api
         [HttpDelete("remover")]
         public IActionResult Remover([FromBody] string id)
         {
-            var professor = _context.Professores.FirstOrDefault(p => p.Id == id);
+            var professor = _context.Professores.FirstOrDefault(p => p.Id.Equals(id));
             if (professor == null)
             {
                 return NotFound();

@@ -24,7 +24,7 @@ Content-Type: application/json
 DELETE  http://localhost:5199/api/professor/remover
 Content-Type: application/json
 
-"23b0ac66-6ef1-4561-bcc8-4eada1110c59"
+"5b40c6c9-a7ce-47ad-b2f6-9d33080d7085"
 
 
 ### ALTERAR PROFESSOR POR ID

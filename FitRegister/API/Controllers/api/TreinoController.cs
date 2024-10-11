@@ -23,10 +23,12 @@ namespace API.Controllers.api
             {
                 return BadRequest("Treino não pode ser nulo.");
             }
+            
+            Treino treinoNovo = new Treino(treino.Descricao,treino.DuracaoEmDias );
 
-            _context.Treinos.Add(treino);
+            _context.Treinos.Add(treinoNovo);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(Buscar), new { id = treino.Id }, treino);
+            return Ok(treinoNovo);
         }
 
         // Listar Treinos
@@ -38,7 +40,7 @@ namespace API.Controllers.api
 
         // Buscar Treino por ID
         [HttpPost("buscar")]
-        public ActionResult<Treino> Buscar([FromBody] int id)
+        public ActionResult<Treino> Buscar([FromBody] string id)
         {
             var treino = _context.Treinos.Find(id);
             if (treino == null)
@@ -50,7 +52,7 @@ namespace API.Controllers.api
 
         // Remover Treino
         [HttpDelete("remover")]
-        public IActionResult Remover([FromBody] int id)
+        public IActionResult Remover([FromBody] string id)
         {
             var treino = _context.Treinos.Find(id);
             if (treino == null)

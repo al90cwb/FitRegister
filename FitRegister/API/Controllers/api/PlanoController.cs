@@ -24,9 +24,11 @@ namespace API.Controllers.api
                 return BadRequest("Plano não pode ser nulo.");
             }
 
-            _context.Planos.Add(plano);
+            Plano planoNovo = new Plano(plano.NomePlano,plano.Valor);
+
+            _context.Planos.Add(planoNovo);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(Buscar), new { id = plano.Id }, plano);
+            return Ok(planoNovo);
         }
 
         // Listar Planos
@@ -39,7 +41,7 @@ namespace API.Controllers.api
 
         // Buscar Plano por ID
         [HttpGet("buscar")]
-        public IActionResult Buscar([FromBody] int id)
+        public IActionResult Buscar([FromBody] string id)
         {
             var plano = _context.Planos.Find(id);
             if (plano == null)
@@ -51,7 +53,7 @@ namespace API.Controllers.api
 
         // Remover Plano
         [HttpDelete("remover")]
-        public IActionResult Remover([FromBody] int id)
+        public IActionResult Remover([FromBody] string id)
         {
             var plano = _context.Planos.Find(id);
             if (plano == null)
