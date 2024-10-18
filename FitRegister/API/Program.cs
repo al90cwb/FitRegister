@@ -1,5 +1,5 @@
 using API.Models;
-using Microsoft.AspNetCore.Mvc;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDataContext>();
@@ -19,7 +19,6 @@ if (app.Environment.IsDevelopment())
     //app.UseSwagger();
     //app.UseSwaggerUI();
 }
-
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

@@ -1,17 +1,13 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
 namespace API.Models;
 
 public class Aluno : Usuario
 {
-    public Treino? Treino { get; set; }
-    public Plano?  Plano { get; set; }
-    public Professor?  Professor { get; set; } 
+    public Plano? Plano { get; set; }
+    public Guid PlanoId { get; set; }
 
-    public Aluno(string nome, string endereco, string telefone, string login, string senha)
-        : base(nome, endereco, telefone, login, senha)
+    public Aluno(string nome, string endereco, string telefone, string email, string senha,Guid planoId)
+        : base(nome, endereco, telefone, email, senha)
     {
+        PlanoId = planoId;
     }
-
 }

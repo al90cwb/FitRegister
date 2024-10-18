@@ -2,13 +2,13 @@ using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers.api
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class TreinoController : ControllerBase
     {
-        private readonly AppDataContext _context;
+               private readonly AppDataContext _context;
 
         public TreinoController(AppDataContext context)
         {
@@ -24,7 +24,12 @@ namespace API.Controllers.api
                 return BadRequest("Treino não pode ser nulo.");
             }
             
-            Treino treinoNovo = new Treino(treino.Descricao,treino.DuracaoEmDias );
+           Treino treinoNovo = new Treino();
+            treinoNovo.Nome = treino.Nome;
+            treinoNovo.Descricao = treino.Descricao;
+            treinoNovo.NivelTreino = treino.NivelTreino;
+            treinoNovo.Finalidade = treino.Finalidade;
+        
 
             _context.Treinos.Add(treinoNovo);
             _context.SaveChanges();
@@ -64,24 +69,48 @@ namespace API.Controllers.api
             _context.SaveChanges();
             return NoContent();
         }
-
-        // Alterar Treino
+        
+        // PUT: api/treino/alterar
         [HttpPut("alterar")]
-        public IActionResult Alterar([FromBody] Treino? treinoAtualizado)
+        public IActionResult AlterarTreino([FromBody] Treino treinoUpdt)
         {
-            var treino = _context.Treinos.Find(treinoAtualizado.Id);
+            var treino = _context.Treinos.FirstOrDefault(t => t.Id.Equals(treinoUpdt.Id));
+
             if (treino == null)
             {
-                return NotFound();
+                return NotFound(new { Message = "Treino não encontrado" });
             }
-            if (treinoAtualizado.Descricao!=null){
-                treino.Descricao = treinoAtualizado.Descricao;
+
+            // Alterar os campos que forem não nulos (parcial)
+            if (!string.IsNullOrEmpty(treinoUpdt.Nome))
+            {
+                treino.Nome = treinoUpdt.Nome;
             }
-            if(treinoAtualizado.DuracaoEmDias!=null){
-                treino.DuracaoEmDias = treinoAtualizado.DuracaoEmDias;
+
+            if (!string.IsNullOrEmpty(treinoUpdt.Finalidade))
+            {
+                treino.Finalidade = treinoUpdt.Finalidade;
             }
+
+            if (!string.IsNullOrEmpty(treinoUpdt.Descricao))
+            {
+                treino.Descricao = treinoUpdt.Descricao;
+            }
+
+            if (!string.IsNullOrEmpty(treinoUpdt.NivelTreino))
+            {
+                treino.NivelTreino = treinoUpdt.NivelTreino;
+            }
+
+            _context.Treinos.Update(treino);
             _context.SaveChanges();
+
             return Ok(treino);
         }
+
+        //Adicionar Exercicio no treino
+
+        //Remover Exercicio no treino
+
     }
 }

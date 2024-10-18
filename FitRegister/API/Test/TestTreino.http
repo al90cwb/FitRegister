@@ -1,0 +1,37 @@
+###cadastrar
+PUT http://localhost:5253/api/treino/cadastrar
+Content-Type: application/json
+
+{
+    "nome": "Treino de Força",
+    "descricao": "Treino focado em ganho de força muscular.",
+    "nivelTreino": "Avançado",
+    "finalidade": "Aumentar a força"
+}
+
+### listar
+GET http://localhost:5253/api/treino/listar
+
+### buscar
+POST http://localhost:5253/api/treino/buscar
+Content-Type: application/json
+
+"641c2a63-ac64-4b5b-94b5-ab48f344e546" // Substitua pelo ID real
+
+### remover
+DELETE http://localhost:5253/api/treino/remover
+Content-Type: application/json
+
+"641c2a63-ac64-4b5b-94b5-ab48f344e546" // Substitua pelo ID real
+
+###alterar
+PUT http://localhost:5253/api/treino/alterar
+Content-Type: application/json
+
+{
+    "id": "641c2a63-ac64-4b5b-94b5-ab48f344e546", // Substitua pelo ID real
+    "nome": "Treino de Força Avançado",
+    "descricao": "Treino avançado para ganho de força muscular.",
+    "nivelTreino": "Expert",
+    "finalidade": "Aumentar a força rapidamente"
+}

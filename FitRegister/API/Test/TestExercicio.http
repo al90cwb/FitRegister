@@ -1,0 +1,40 @@
+###cadastrar
+PUT http://localhost:5253/api/exercicio/cadastrar
+Content-Type: application/json
+
+{
+    "nome": "Teste",
+    "grupoMuscular": "Teste",
+    "descricao": "Exercício para fortalecer o peitoral.",
+    "repeticoes": 15,
+    "tempoDescanso": 60
+}
+
+###listar
+GET http://localhost:5253/api/exercicio/listar
+
+###buscar por id
+POST http://localhost:5253/api/exercicio/buscar
+Content-Type: application/json
+
+"90890257-b592-4e05-8099-84678d520bd0"
+
+###remover
+DELETE http://localhost:5253/api/exercicio/remover
+Content-Type: application/json
+
+"90890257-b592-4e05-8099-84678d520bd0"
+
+###alterar
+PUT http://localhost:5253/api/exercicio/atualizar
+Content-Type: application/json
+
+{
+    "id": "90890257-b592-4e05-8099-84678d520bd0", // ID do exercício a ser atualizado
+    "nome": "Flexão com Peso",
+    "grupoMuscular": "Peito",
+    "descricao": "Exercício para fortalecer o peitoral com peso adicional.",
+    "repeticoes": 12,
+    "tempoDescanso": 90
+}
+

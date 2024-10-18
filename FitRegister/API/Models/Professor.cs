@@ -6,10 +6,9 @@ public class Professor : Usuario
 {
     public List<Aluno>? Alunos { get; set; } 
 
-    public Professor(string nome, string endereco, string telefone, string login, string senha)
-        : base(nome, endereco, telefone, login, senha)
+    public Professor(string nome, string endereco, string telefone, string email, string senha)
+        : base(nome, endereco, telefone, email, senha)
     {
         Alunos = new List<Aluno>();
     }
-
 }

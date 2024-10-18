@@ -1,0 +1,45 @@
+### Cadastrar Aluno
+POST  http://localhost:5253/api/aluno/cadastrar
+Content-Type: application/json
+
+{
+      "nome": "Adriano",
+      "endereco": "Rua das Flores, 12",
+      "telefone": "41 996543210",
+      "email": "felipe.santos@gmail.com",
+      "senha": "felipe789A!",
+      "planoId": "4ba18d0c-25c9-4f64-8cac-89cf9a951742"
+}
+
+### Atualizar Aluno por Id
+PUT  http://localhost:5253/api/aluno/alterar
+Content-Type: application/json
+
+{
+   "id": "f25bf218-c98c-47ac-805d-117259216239",
+   "nome": "Alterado",
+   "endereco": "Alterado, 12",
+   "telefone": "41 Alterado",
+   "email": "Alterado.santos@gmail.com",
+   "senha": "Alterado123!"
+}
+### Cadastrar treino
+POST  http://localhost:5253/api/aluno/adicionar-treino/33ce76b3-2097-4f33-a9be-b9d593966efb
+Content-Type: application/json
+
+{
+     "descricao" : "Treino de Perna",
+     "duracaoEmDias" : 30
+}
+
+### Buscar Aluno por ID
+GET http://localhost:5253/api/aluno/buscar/cf23ec38-ccb7-469a-90b8-693ad58b8cd4
+
+### Ver Plano por ID do aluno
+GET http://localhost:5253/api/aluno/ver-plano/cf23ec38-ccb7-469a-90b8-693ad58b8cd4
+
+### Listar todos alunos
+GET http://localhost:5253/api/aluno/listar
+
+### Deletar por Id
+DELETE http://localhost:5253/api/aluno/deletar/c20e2784-6875-453e-baf6-9a03e28feeb4
