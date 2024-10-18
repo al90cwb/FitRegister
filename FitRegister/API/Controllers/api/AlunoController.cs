@@ -16,26 +16,83 @@ namespace API.Controllers.api
         }
 
         [HttpPut("cadastrar")]
-        public IActionResult Cadastrar([FromBody] Aluno aluno, [FromQuery] string idPlano)
+        public IActionResult Cadastrar([FromBody] UsuarioUpdt aluno, [FromQuery] string idPlano,string idTreino, string idProfessor)
         {
-            if (aluno == null)
+            if (string.IsNullOrEmpty(aluno.Endereco))
             {
-                return BadRequest("Aluno não pode ser nulo.");
+                return BadRequest("Endereço não pode ser nulo.");
             }
+            if (string.IsNullOrEmpty(aluno.Login))
+            {
+                return BadRequest("Login não pode ser nulo.");
+            }
+            if (string.IsNullOrEmpty(aluno.Nome))
+            {
+                return BadRequest("Nome não pode ser nulo.");
+            }
+            if (string.IsNullOrEmpty(aluno.Senha))
+            {
+                return BadRequest("Senha não pode ser nulo.");
+            }
+            if (string.IsNullOrEmpty(aluno.Telefone))
+            {
+                return BadRequest("Telefone não pode ser nulo.");
+            }
+            
 
-            // Aqui você pode usar o idPlano para vincular o aluno a um plano, por exemplo:
+
             var plano = _context.Planos.FirstOrDefault(p => p.Id.Equals (idPlano));
             if (plano == null)
             {
                 return NotFound("Plano não encontrado.");
             }
-
-            aluno.SetPlanoDeUso(plano);  // Atribuir o plano ao aluno
-
-            _context.Alunos.Add(aluno);
-            _context.SaveChanges();
             
-            return CreatedAtAction(nameof(Buscar), new { id = aluno.Id }, aluno);
+
+            var treino = _context.Treinos.FirstOrDefault(p => p.Id.Equals (idTreino));
+            if (treino == null)
+            {
+                return NotFound("Treino não encontrado.");
+            }
+           
+            
+            var professor = _context.Professores.FirstOrDefault(p => p.Id.Equals (idProfessor));
+            if (professor == null)
+            {
+                return NotFound("Professor não encontrado.");
+            }
+            
+
+            Aluno alunoNovo = new Aluno(aluno.Nome, aluno.Endereco,aluno.Telefone,aluno.Login,aluno.Senha);
+
+            
+
+            
+            alunoNovo.Professor = professor;
+            //alunoNovo.Plano = plano;
+            //alunoNovo.Treino = treino;
+            professor.Alunos.Add(alunoNovo);
+
+            return Ok(professor);
+
+            // professor.Alunos.Add(alunoNovo);
+            // Ok(plano);
+            // Ok(alunoNovo);
+
+            // plano.Alunos.Add(alunoNovo);
+            // Ok(plano);
+            // Ok(alunoNovo);
+
+            // treino.Alunos.Add(alunoNovo);
+            // Ok(plano);
+            // Ok(alunoNovo);
+
+            
+            //Ok(alunoNovo);
+
+            //_context.Alunos.Add(aluno);
+            //_context.SaveChanges();
+            
+            // return Ok();
         }
         
         // Listar Alunos
@@ -74,7 +131,7 @@ namespace API.Controllers.api
 
         // Alterar Aluno
         [HttpPut("alterarDadosAluno")]
-        public IActionResult Alterar([FromBody] Aluno alunoDto)
+        public IActionResult Alterar([FromBody] UsuarioUpdt alunoDto)
         {
             if (alunoDto == null || string.IsNullOrEmpty(alunoDto.Id))
             {
@@ -102,9 +159,6 @@ namespace API.Controllers.api
 
             if (!string.IsNullOrEmpty(alunoDto.Senha))
                 alunoBuscado.Senha = alunoDto.Senha;
-
-            if (alunoDto.DataDuracao.HasValue)
-                alunoBuscado.DataDuracao = alunoDto.DataDuracao.Value;
 
             _context.SaveChanges();
             return Ok(alunoBuscado);

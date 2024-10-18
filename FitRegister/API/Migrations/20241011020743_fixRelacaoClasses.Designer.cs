@@ -3,6 +3,7 @@ using System;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,16 +11,19 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20241011020743_fixRelacaoClasses")]
+    partial class fixRelacaoClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
             modelBuilder.Entity("API.Models.Aluno", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CriadoEm")
@@ -37,10 +41,10 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PlanoId")
+                    b.Property<Guid?>("PlanoId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ProfessorId")
+                    b.Property<Guid?>("ProfessorId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Senha")
@@ -50,7 +54,7 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TreinoId")
+                    b.Property<Guid?>("TreinoId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -66,14 +70,14 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Plano", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NomePlano")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Valor")
+                    b.Property<decimal?>("Valor")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -83,7 +87,8 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Professor", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CriadoEm")
@@ -115,14 +120,14 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Treino", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Descricao")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("DuracaoEmDias")
+                    b.Property<int?>("DuracaoEmDias")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

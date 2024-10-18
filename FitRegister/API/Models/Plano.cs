@@ -4,16 +4,16 @@ namespace API.Models;
 
 public class Plano
 {
-    public int Id { get; set; }
-    public string? NomePlano { get; set; }
-    public decimal? Valor { get; set; }
-    public List<Aluno> Alunos { get; set; } = new List<Aluno>();
+    public string? Id { get; set; }
+    public string NomePlano { get; set; }
+    public decimal Valor { get; set; }
+    public List<Aluno>? Alunos { get; set; } 
 
-    public Plano() { }
-    public Plano(int id, string nomePlano, decimal valor)
+    public Plano( string nomePlano, decimal valor)
     {
-        Id = id;
+        Id = Guid.NewGuid().ToString();
         NomePlano = nomePlano;
         Valor = valor;
+        Alunos = new List<Aluno>();
     }
 }

@@ -20,7 +20,7 @@ Content-Type: application/json
 DELETE http://localhost:5199/api/treino/remover
 Content-Type: application/json
 
-"1"
+"b0457c0d-1ab9-434a-82ce-ea381eeac4dd"
 
 ###ALTERAR DADOS DO TRINEO TOTAL
 PUT http://localhost:5199/api/treino/alterar

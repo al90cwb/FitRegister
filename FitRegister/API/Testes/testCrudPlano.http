@@ -3,8 +3,8 @@ PUT http://localhost:5199/api/plano/cadastrar
 Content-Type: application/json
 
 {
-    "nomePlano": "Plano Personal",
-    "valor": 350.00
+    "nomePlano": "Plano Gold Anual",
+    "valor": 100.00
 }
 
 ###LISTAR PLANO 
@@ -20,7 +20,7 @@ Content-Type: application/json
 DELETE http://localhost:5199/api/plano/remover
 Content-Type: application/json
 
-"4"
+"e6b037a2-c886-49db-9a22-a590660a5896e6b037a2-c886-49db-9a22-a590660a5896"
 
 ###ALTERAR DADOS DO PLANO TOTAL
 PUT http://localhost:5199/api/plano/alterar

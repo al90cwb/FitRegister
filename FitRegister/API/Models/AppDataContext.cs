@@ -18,4 +18,28 @@ public class AppDataContext : DbContext
         optionsBuilder.UseSqlite("Data Source=FitResiterDb.db");//string de conexão
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            
+            modelBuilder.Entity<Aluno>()
+                .HasKey(a => a.Id);
+
+            modelBuilder.Entity<Aluno>()
+                .HasOne(a => a.Plano)
+                .WithMany(p => p.Alunos)
+                .HasForeignKey("PlanoId");
+                
+            modelBuilder.Entity<Aluno>()
+                .HasOne(a => a.Professor)
+                .WithMany(p => p.Alunos)
+                .HasForeignKey("ProfessorId");
+                
+            modelBuilder.Entity<Aluno>()
+                .HasOne(a => a.Treino)
+                .WithMany(t => t.Alunos)
+                .HasForeignKey("TreinoId");
+        }
+
+
 }

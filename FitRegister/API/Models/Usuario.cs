@@ -5,7 +5,7 @@ namespace API.Models;
 
 public abstract class Usuario
 {
-    public String Id { get; set; }
+    public string Id { get; set; }
     [Required(ErrorMessage = "O Nome do usuário é obrigatório.")]
     public string?  Nome { get; set; }
     [Required(ErrorMessage = "O Endereço do usuário é obrigatório.")]
