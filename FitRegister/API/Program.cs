@@ -5,7 +5,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDataContext>();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+.AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.MaxDepth = 64; // Ajuste conforme necessário, 64 é um exemplo.
+    });
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 

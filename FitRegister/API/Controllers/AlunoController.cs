@@ -42,8 +42,8 @@ namespace API.Controllers
         }
 
          // GET: api/aluno/buscar/{id}
-        [HttpGet("buscar")]
-        public IActionResult BuscarAluno([FromRoute]string id)
+        [HttpGet("buscar/{id}")]
+        public IActionResult BuscarAluno([FromRoute]Guid id)
         {
             var aluno = ctx.Alunos
                 .Include(a => a.Plano)

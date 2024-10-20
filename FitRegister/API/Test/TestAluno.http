@@ -33,7 +33,7 @@ Content-Type: application/json
 }
 
 ### Buscar Aluno por ID
-GET http://localhost:5253/api/aluno/buscar/cf23ec38-ccb7-469a-90b8-693ad58b8cd4
+GET http://localhost:5253/api/aluno/buscar/f25bf218-c98c-47ac-805d-117259216239
 
 ### Ver Plano por ID do aluno
 GET http://localhost:5253/api/aluno/ver-plano/cf23ec38-ccb7-469a-90b8-693ad58b8cd4

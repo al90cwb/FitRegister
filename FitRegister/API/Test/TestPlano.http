@@ -1,5 +1,5 @@
 ### Buscar por nome
-GET http://localhost:5253/api/plano/buscar/Plano Teste
+GET http://localhost:5253/api/plano/buscar/Plano1
 
 ### Listar todos Planos
 GET http://localhost:5253/api/plano/listar
@@ -8,7 +8,7 @@ GET http://localhost:5253/api/plano/listar
 DELETE http://localhost:5253/api/plano/deletar/641c2a63-ac64-4b5b-94b5-ab48f344e546
 
 ### Mover aluno para novo plano
-PUT http://localhost:5253/api/plano/mover-aluno/f25bf218-c98c-47ac-805d-117259216239/para-plano/17da9c0c-7623-4639-8c5e-94f600da558f
+PUT http://localhost:5253/api/plano/mover-aluno/f25bf218-c98c-47ac-805d-117259216239/para-plano/beb97501-71e8-4bb0-a857-ae380183835c
 Content-Type:  application/json
 
 ### Mover todos alunos de plano A para B
@@ -21,7 +21,7 @@ POST http://localhost:5253/api/plano/cadastrar
 Content-Type: application/json
 
 {
-    "nomePlano": "Plano  2 ",
+    "nomePlano": "Plano1",
     "valor": 250,
     "parcelas": 4
 }
