@@ -1,0 +1,37 @@
+### Buscar por nome
+GET http://localhost:5253/api/plano/buscar/Plano Para Teste
+
+### Listar todos Planos
+GET http://localhost:5253/api/plano/listar
+
+### Deletar por Id
+DELETE http://localhost:5253/api/plano/deletar/4ba18d0c-25c9-4f64-8cac-89cf9a951742
+
+### Mover aluno para novo plano (Alunoid/PlanoId)
+PUT http://localhost:5253/api/plano/mover-aluno/223a4fae-4dd3-4855-b591-d595a29f3696/para-plano/17da9c0c-7623-4639-8c5e-94f600da558f
+Content-Type:  application/json
+
+### Mover todos alunos de plano A para B (planoAntigoId/PlanoNovoId
+PUT http://localhost:5253/api/plano/mover-alunos/4ba18d0c-25c9-4f64-8cac-89cf9a951742/dc7edf4e-19be-4cca-8c21-2648abf563b6
+Content-Type: application/json
+
+
+### Cadastrar plano 
+POST http://localhost:5253/api/plano/cadastrar
+Content-Type: application/json
+
+{
+    "nomePlano": "Plano Para Teste",
+    "valor": 250,
+    "parcelas": 4
+}
+
+### Atualizar plano
+PUT http://localhost:5253/api/plano/atualizar/4ba18d0c-25c9-4f64-8cac-89cf9a951742
+Content-Type: application/json
+
+{
+    "nomePlano" : "Plano",
+    "valor" : 3500,
+    "parcelas": 1
+}

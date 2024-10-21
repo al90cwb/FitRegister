@@ -1,0 +1,52 @@
+### Cadastrar treinos
+POST http://localhost:5253/api/treino/cadastrar
+Content-Type: application/json
+
+{
+    "nome": "Treino BA",
+    "finalidade": "Aumento de massa muscular",
+    "descricao": "Treino focado em hipertrofia",
+    "nivelTreino": "Intermediário",
+    "exercicios": [
+        {
+            "id": "90890257-b592-4e05-8099-84678d520bd0"
+        },
+        {
+            "id": "91ed587a-22a7-4b27-a4bb-3c98cf5ff7ca"
+        }
+    ]
+}
+
+### Listar treinos
+GET http://localhost:5253/api/treino/listar
+
+### Buscar treinos por nome
+GET http://localhost:5253/api/treino/buscarPorNome/Treino AB
+
+### Buscar treinos por ID
+GET http://localhost:5253/api/treino/buscarPorId/02519010-abef-40ba-91e1-379f6454d29b
+
+### Deletar treinos
+DELETE http://localhost:5253/api/treino/deletar/13b0c1c7-9137-445a-baab-830eb32e7b60
+
+### Alterar treinos
+PUT http://localhost:5253/api/treino/alterar/02519010-abef-40ba-91e1-379f6454d29b
+Content-Type: application/json
+
+{
+    "nome": "Treino AB",
+    "finalidade": "Definição muscular",
+    "descricao": "Treino focado em definição",
+    "nivelTreino": "Avançado",
+    "exercicios": [
+        {
+            "id": "91ed587a-22a7-4b27-a4bb-3c98cf5ff7ca"
+        },
+                {
+            "id": "41329ef6-72f7-4512-8251-828633e430e2"
+        },
+                {
+            "id": "683a41d9-381b-41b1-b387-24d762bb5d8a"
+        }
+    ]
+}
