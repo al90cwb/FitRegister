@@ -1,0 +1,91 @@
+### Cadastrar exercicio
+POST http://localhost:5253/api/exercicio/cadastrar
+Content-Type: application/json
+
+{
+    "nome": "Teste",
+    "grupoMuscular": "Teste",
+    "descricao": "Exercício para fortalecer o peitoral.",
+    "repeticoes": 15,
+    "tempoDescanso": 60
+}
+
+### Listar exercicios
+GET http://localhost:5253/api/exercicio/listar
+
+### Buscar exercicios por nome
+GET http://localhost:5253/api/exercicio/buscarPorNome/Stiff
+
+### Buscar exercicios por ID
+GET http://localhost:5253/api/exercicio/buscarPorId/02519010-abef-40ba-91e1-379f6454d29b
+
+### Deletar exercicios
+DELETE http://localhost:5253/api/exercicio/deletar/026cd063-068c-4d09-8d33-112d45c590d3
+
+### Alterar exercicios por ID
+PUT http://localhost:5253/api/exercicio/alterar/41329ef6-72f7-4512-8251-828633e430e2
+Content-Type: application/json
+
+{
+  "Nome": "Stiff",
+  "grupoMuscular": "Pernas",
+  "Descricao": "Exercício que foca nos músculos isquiotibiais e glúteos.",
+  "Repeticoes": 12,
+  "TempoDescanso": 60
+}
+
+### Cadastrar lista de exercicios
+POST http://localhost:5253/api/exercicio/cadastrarlista
+Content-Type: application/json
+
+[
+  {
+    "Nome": "Flexão",
+    "grupoMuscular": "Peito",
+    "Descricao": "Exercício que trabalha o peitoral, ombros e tríceps.",
+    "Repeticoes": 15,
+    "TempoDescanso": 45
+  },
+  {
+    "Nome": "Puxada na Barra Fixa",
+    "grupoMuscular": "Costas",
+    "Descricao": "Fortalece os músculos das costas e bíceps.",
+    "Repeticoes": 10,
+    "TempoDescanso": 60
+  },
+  {
+    "Nome": "Leg Press",
+    "grupoMuscular": "Pernas",
+    "Descricao": "Exercício de força que foca nos músculos das pernas.",
+    "Repeticoes": 12,
+    "TempoDescanso": 60
+  },
+  {
+    "Nome": "Remada Curvada",
+    "grupoMuscular": "Costas",
+    "Descricao": "Foca nos músculos das costas e bíceps.",
+    "Repeticoes": 12,
+    "TempoDescanso": 60
+  },
+  {
+    "Nome": "Abdômen Inverso",
+    "grupoMuscular": "Abdômen",
+    "Descricao": "Trabalha a parte inferior do abdômen.",
+    "Repeticoes": 15,
+    "TempoDescanso": 30
+  },
+  {
+    "nome": "Flexão de Braços",
+    "grupoMuscular": "Peito",
+    "descricao": "Exercício para fortalecer o peitoral.",
+    "repeticoes": 10,
+    "TempoDescanso": 30
+  },
+  {
+    "nome": "Flexão de Braços Inversa",
+    "grupoMuscular": "Tríceps",
+    "descricao": "Exercício para fortalecer os tríceps.",
+    "repeticoes": 12,
+    "TempoDescanso": 30
+  }  
+]

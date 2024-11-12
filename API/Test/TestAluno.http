@@ -1,0 +1,34 @@
+### Cadastrar Aluno
+POST  http://localhost:5253/api/aluno/cadastrar
+Content-Type: application/json
+
+{
+      "nome": "Adriano CS",
+      "endereco": "Rua das Flores, 12",
+      "telefone": "41 996543210",
+      "email": "felipe.santos@gmail.com",
+      "senha": "felipe789A!",
+      "planoId": "dc7edf4e-19be-4cca-8c21-2648abf563b6"
+}
+
+### Atualizar Aluno por Id
+PUT  http://localhost:5253/api/aluno/alterar/
+Content-Type: application/json
+
+{
+   "id": "88e72c6c-6ecd-4b2f-9e77-bd0f88ac98ec",
+   "nome": "Alterado",
+   "endereco": "Alterado, 12",
+   "telefone": "41 Alterado",
+   "email": "Alterado.santos@gmail.com",
+   "senha": "Alterado123!"
+}
+
+### Buscar Aluno por ID
+GET http://localhost:5253/api/aluno/buscar/88e72c6c-6ecd-4b2f-9e77-bd0f88ac98ec
+
+### Listar todos alunos
+GET http://localhost:5253/api/aluno/listar
+
+### Deletar por Id
+DELETE http://localhost:5253/api/aluno/deletar/88e72c6c-6ecd-4b2f-9e77-bd0f88ac98ec
