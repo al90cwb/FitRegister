@@ -12,7 +12,7 @@ public class Treino
     public string? Descricao { get; set; }
     public string? NivelTreino  { get; set; }
     public ICollection<Exercicio> Exercicios { get; set; } = new List<Exercicio>(); 
-    public ICollection<Aluno> Alunos { get; set; } = new List<Aluno>();
+    public List<Aluno> Alunos { get; set; } = new List<Aluno>();
     public DateTime CriadoEm { get; set; }
     
     public Treino()

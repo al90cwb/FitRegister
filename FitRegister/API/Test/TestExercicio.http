@@ -1,40 +1,91 @@
-###cadastrar
-PUT http://localhost:5253/api/exercicio/cadastrar
+### Cadastrar exercicio
+POST http://localhost:5253/api/exercicios/cadastrar
 Content-Type: application/json
 
 {
-    "nome": "Teste",
+    "nome": "Teste bala",
     "grupoMuscular": "Teste",
     "descricao": "Exercício para fortalecer o peitoral.",
     "repeticoes": 15,
     "tempoDescanso": 60
 }
 
-###listar
-GET http://localhost:5253/api/exercicio/listar
+### Listar exercicios
+GET http://localhost:5253/api/exercicios/listar
 
-###buscar por id
-POST http://localhost:5253/api/exercicio/buscar
-Content-Type: application/json
+### Buscar exercicios por nome
+GET http://localhost:5253/api/exercicios/buscarPorNome/Teste Avançado
 
-"90890257-b592-4e05-8099-84678d520bd0"
+### Buscar exercicios por ID
+GET http://localhost:5253/api/exercicios/buscar/57aecd02-7f37-4626-8d1f-8223e35872de
 
-###remover
-DELETE http://localhost:5253/api/exercicio/remover
-Content-Type: application/json
+### Deletar exercicios
+DELETE http://localhost:5253/api/exercicios/deletar/0591b045-4d43-4dd8-97d4-a90c9f2c7d94
 
-"90890257-b592-4e05-8099-84678d520bd0"
-
-###alterar
-PUT http://localhost:5253/api/exercicio/atualizar
+### Alterar exercicios por ID
+PUT http://localhost:5253/api/exercicios/alterar/57aecd02-7f37-4626-8d1f-8223e35872de
 Content-Type: application/json
 
 {
-    "id": "90890257-b592-4e05-8099-84678d520bd0", // ID do exercício a ser atualizado
-    "nome": "Flexão com Peso",
-    "grupoMuscular": "Peito",
-    "descricao": "Exercício para fortalecer o peitoral com peso adicional.",
-    "repeticoes": 12,
-    "tempoDescanso": 90
+  "Nome": "Teste Avançado",
+  "grupoMuscular": "Pernas",
+  "Descricao": "Exercício que foca nos músculos isquiotibiais e glúteos.",
+  "Repeticoes": 12,
+  "TempoDescanso": 60
 }
 
+### Cadastrar lista de exercicios
+POST http://localhost:5253/api/exercicios/cadastrarlista
+Content-Type: application/json
+
+[
+  {
+    "Nome": "Flexão",
+    "grupoMuscular": "Peito",
+    "Descricao": "Exercício que trabalha o peitoral, ombros e tríceps.",
+    "Repeticoes": 15,
+    "TempoDescanso": 45
+  },
+  {
+    "Nome": "Puxada na Barra Fixa",
+    "grupoMuscular": "Costas",
+    "Descricao": "Fortalece os músculos das costas e bíceps.",
+    "Repeticoes": 10,
+    "TempoDescanso": 60
+  },
+  {
+    "Nome": "Leg Press",
+    "grupoMuscular": "Pernas",
+    "Descricao": "Exercício de força que foca nos músculos das pernas.",
+    "Repeticoes": 12,
+    "TempoDescanso": 60
+  },
+  {
+    "Nome": "Remada Curvada",
+    "grupoMuscular": "Costas",
+    "Descricao": "Foca nos músculos das costas e bíceps.",
+    "Repeticoes": 12,
+    "TempoDescanso": 60
+  },
+  {
+    "Nome": "Abdômen Inverso",
+    "grupoMuscular": "Abdômen",
+    "Descricao": "Trabalha a parte inferior do abdômen.",
+    "Repeticoes": 15,
+    "TempoDescanso": 30
+  },
+  {
+    "nome": "Flexão de Braços",
+    "grupoMuscular": "Peito",
+    "descricao": "Exercício para fortalecer o peitoral.",
+    "repeticoes": 10,
+    "TempoDescanso": 30
+  },
+  {
+    "nome": "Flexão de Braços Inversa",
+    "grupoMuscular": "Tríceps",
+    "descricao": "Exercício para fortalecer os tríceps.",
+    "repeticoes": 12,
+    "TempoDescanso": 30
+  }  
+]

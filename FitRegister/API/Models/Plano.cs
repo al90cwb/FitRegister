@@ -13,7 +13,6 @@ public class Plano
     public decimal Valor { get; set; }
     [Required(ErrorMessage = "A quantidade de parcelas é obrigatório.")]
     public int? Parcelas { get; set; }
-    [JsonIgnore]
     public ICollection<Aluno> Alunos { get; set; } = new List<Aluno>();
     public DateTime CriadoEm { get; set; }
 

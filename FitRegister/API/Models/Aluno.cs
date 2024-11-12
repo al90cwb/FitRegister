@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
+
 namespace API.Models;
 
 public class Aluno : Usuario
 {
+    [JsonIgnore]
     public Plano? Plano { get; set; }
     public Guid PlanoId { get; set; }
 

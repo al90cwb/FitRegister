@@ -3,39 +3,33 @@ POST http://localhost:5253/api/professor/cadastrar
 Content-Type: application/json
 
 {
-    "nome": "João Silva",
+    "nome": "Pedrinho",
     "endereco": "Rua das Flores, 123",
     "telefone": "1234-5678",
     "email": "joao.silva@example.com",
-    "senha": "senhaSegura123"
+    "senha": "senhaSegura123!"
 }
 
 ###listar
 GET http://localhost:5253/api/professor/listar
 
 ###buscar
-POST http://localhost:5253/api/professor/buscar
-Content-Type: application/json
-
-"641c2a63-ac64-4b5b-94b5-ab48f344e546" // Substitua pelo ID real
+GET http://localhost:5253/api/professor/buscar/d0eebbeb-8f79-4cbf-ab45-4f7ea13dd181
 
 ###remover
-DELETE http://localhost:5253/api/professor/remover
+DELETE http://localhost:5253/api/professor/remover/d0eebbeb-8f79-4cbf-ab45-4f7ea13dd181
 Content-Type: application/json
-
-"641c2a63-ac64-4b5b-94b5-ab48f344e546" // Substitua pelo ID real
-
 
 ###alterar
 PUT http://localhost:5253/api/professor/alterar
 Content-Type: application/json
 
 {
-    "id": "641c2a63-ac64-4b5b-94b5-ab48f344e546", // Substitua pelo ID real
-    "nome": "João Silva Alterado",
+    "id": "eaff546c-b397-47f6-a804-20f4fb9f290d",
+    "nome": "Pedrinho Alterado",
     "endereco": "Rua das Flores, 456",
     "telefone": "9876-5432",
     "email": "joao.silva.alterado@example.com",
-    "senha": "novaSenhaSegura123"
+    "senha": "novaSenhaSegura123!"
 }
 

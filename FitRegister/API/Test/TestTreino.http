@@ -1,37 +1,52 @@
-###cadastrar
-PUT http://localhost:5253/api/treino/cadastrar
+### Cadastrar treinos
+POST http://localhost:5253/api/treinos/cadastrar
 Content-Type: application/json
 
 {
-    "nome": "Treino de Força",
-    "descricao": "Treino focado em ganho de força muscular.",
-    "nivelTreino": "Avançado",
-    "finalidade": "Aumentar a força"
+    "nome": "Treino Bala",
+    "finalidade": "Aumento de massa muscular",
+    "descricao": "Treino focado em hipertrofia",
+    "nivelTreino": "Intermediário",
+    "exercicios": [
+        {
+            "id": "90a45219-e239-4ecf-9d98-b09e5e47e1c8"
+        },
+        {
+            "id": "c61551c3-41c1-4b23-9a56-eacfe542df03"
+        }
+    ]
 }
 
-### listar
-GET http://localhost:5253/api/treino/listar
+### Listar treinos
+GET http://localhost:5253/api/treinos/listar
 
-### buscar
-POST http://localhost:5253/api/treino/buscar
-Content-Type: application/json
+### Buscar treinos por nome
+GET http://localhost:5253/api/treinos/buscarPorNome/Treino AB
 
-"641c2a63-ac64-4b5b-94b5-ab48f344e546" // Substitua pelo ID real
+### Buscar treinos por ID
+GET http://localhost:5253/api/treinos/buscarPorId/02519010-abef-40ba-91e1-379f6454d29b
 
-### remover
-DELETE http://localhost:5253/api/treino/remover
-Content-Type: application/json
+### Deletar treinos
+DELETE http://localhost:5253/api/treinos/deletar/13b0c1c7-9137-445a-baab-830eb32e7b60
 
-"641c2a63-ac64-4b5b-94b5-ab48f344e546" // Substitua pelo ID real
-
-###alterar
-PUT http://localhost:5253/api/treino/alterar
+### Alterar treinos
+PUT http://localhost:5253/api/treinos/alterar/02519010-abef-40ba-91e1-379f6454d29b
 Content-Type: application/json
 
 {
-    "id": "641c2a63-ac64-4b5b-94b5-ab48f344e546", // Substitua pelo ID real
-    "nome": "Treino de Força Avançado",
-    "descricao": "Treino avançado para ganho de força muscular.",
-    "nivelTreino": "Expert",
-    "finalidade": "Aumentar a força rapidamente"
+    "nome": "Treino AB",
+    "finalidade": "Definição muscular",
+    "descricao": "Treino focado em definição",
+    "nivelTreino": "Avançado",
+    "exercicios": [
+        {
+            "id": "91ed587a-22a7-4b27-a4bb-3c98cf5ff7ca"
+        },
+                {
+            "id": "41329ef6-72f7-4512-8251-828633e430e2"
+        },
+                {
+            "id": "683a41d9-381b-41b1-b387-24d762bb5d8a"
+        }
+    ]
 }

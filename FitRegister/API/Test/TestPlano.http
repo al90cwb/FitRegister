@@ -1,18 +1,18 @@
 ### Buscar por nome
-GET http://localhost:5253/api/plano/buscar/Plano1
+GET http://localhost:5253/api/plano/buscar/Plano Para Teste
 
 ### Listar todos Planos
 GET http://localhost:5253/api/plano/listar
 
 ### Deletar por Id
-DELETE http://localhost:5253/api/plano/deletar/641c2a63-ac64-4b5b-94b5-ab48f344e546
+DELETE http://localhost:5253/api/plano/deletar/b42cafd1-8cf4-4962-801a-e03e21262314
 
-### Mover aluno para novo plano
-PUT http://localhost:5253/api/plano/mover-aluno/f25bf218-c98c-47ac-805d-117259216239/para-plano/beb97501-71e8-4bb0-a857-ae380183835c
+### Mover aluno para novo plano (Alunoid/PlanoId)
+PUT http://localhost:5253/api/plano/mover-aluno/81ac4ee8-d37b-4c11-95a6-1f2f2ebe4445/para-plano/fc4e2878-ee93-4e02-9c7f-4034b04754b2
 Content-Type:  application/json
 
-### Mover todos alunos de plano A para B
-PUT http://localhost:5253/api/plano/mover-alunos/10/2
+### Mover todos alunos de plano A para B (planoAntigoId/PlanoNovoId
+PUT http://localhost:5253/api/plano/mover-alunos/fc4e2878-ee93-4e02-9c7f-4034b04754b2/6a30980a-07dd-4995-ae24-addc2d9e69db
 Content-Type: application/json
 
 
@@ -21,20 +21,17 @@ POST http://localhost:5253/api/plano/cadastrar
 Content-Type: application/json
 
 {
-    "nomePlano": "Plano1",
+    "nomePlano": "Plano de jogo",
     "valor": 250,
     "parcelas": 4
 }
 
 ### Atualizar plano
-PUT http://localhost:5253/api/plano/atualizar/641c2a63-ac64-4b5b-94b5-ab48f344e546
+PUT http://localhost:5253/api/plano/atualizar/4ba18d0c-25c9-4f64-8cac-89cf9a951742
 Content-Type: application/json
 
 {
-    "nomePlano" : "Plano Especial",
+    "nomePlano" : "Plano",
     "valor" : 3500,
-    "parcelas" : 1
- 
-
-    
+    "parcelas": 1
 }
