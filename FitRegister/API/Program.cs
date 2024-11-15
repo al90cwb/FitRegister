@@ -405,14 +405,7 @@ app.MapGet("/api/plano/listar", async (AppDataContext ctx) =>
     if (!planos.Any())
         return Results.NotFound("Não há planos cadastrados.");
 
-    var resultado = planos.Select(p => new
-    {
-        PlanoId = p.Id,
-        NomePlano = p.NomePlano,
-        Alunos = p.Alunos.Select(a => a.Nome).ToList()
-    }).ToList();
-
-    return Results.Ok(resultado);
+    return Results.Ok(planos);
 });
 
 app.Run();
