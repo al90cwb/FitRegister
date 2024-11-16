@@ -6,12 +6,15 @@ import { AppRoutes } from "./routes";
 import { ThemeProvider } from "@emotion/react";
 import { LightTheme } from "./shared/themes";
 import { AppThemeProvider } from "./shared/context";
+import { MenuLateral } from "./shared/components";
 
 function App() {
   return (
     <AppThemeProvider>
       <BrowserRouter>
-        <AppRoutes/>
+        <MenuLateral>
+          <AppRoutes/>
+        </MenuLateral>
       </BrowserRouter>
     </AppThemeProvider>
   );

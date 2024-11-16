@@ -14,7 +14,6 @@ export const AppRoutes = ( ) =>{
                     onClick={toggleTheme}
                     color='primary'
                 >Teste</Button> } />
-
             <Route path="*" element = {<Navigate to  ="/pagina-inicial" />} />
         </Routes>
     );
