@@ -1,6 +1,6 @@
 import React from "react";
-import AlunoListar from "./components/pages/aluno/AlunoListar";
-import PlanoListar from "./components/pages/plano/PlanoListar";
+import AlunoListar from "./pages/aluno/AlunoListar";
+import PlanoListar from "./pages/plano/PlanoListar";
 
 function App() {
   return (

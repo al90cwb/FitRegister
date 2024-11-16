@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Aluno } from "../../../models/Aluno";
+import { Aluno } from "../../models/Aluno";
 import "./AlunoListar.css";
 
 function AlunoListar(){

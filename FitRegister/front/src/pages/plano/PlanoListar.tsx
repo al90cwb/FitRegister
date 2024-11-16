@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Plano } from "../../../models/Plano";
+import { Plano } from "../../models/Plano";
 import "./PlanoListar.css";
 
 function PlanoListar() {

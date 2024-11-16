@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Fit Register",
+  "name": "Cadastro de Clientes Academia",
   "icons": [
     {
       "src": "favicon.ico",
