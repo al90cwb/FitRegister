@@ -1,0 +1,34 @@
+import React, { createContext, useCallback, useState, useContext } from "react";
+
+interface IDrawerContextData {
+  isDrawerOpen: boolean;
+  toggleDrawerOpen: () => void;
+}
+
+const DrawerContext = createContext<IDrawerContextData | undefined>(undefined);
+
+export const useDrawerContext = () => {
+  const context = useContext(DrawerContext);
+  if (!context) {
+    throw new Error("useDrawerContext must be used within a AppDrawerProvider");
+  }
+  return context;
+};
+
+interface IAppDrawerProviderProps {
+  children: React.ReactNode;
+}
+
+export const DrawerProvider: React.FC<IAppDrawerProviderProps> = ({ children }) => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawerOpen = useCallback(() => {
+    setIsDrawerOpen((oldDrawerOpen) => !oldDrawerOpen);
+  }, []);
+
+  return (
+    <DrawerContext.Provider value={{ isDrawerOpen, toggleDrawerOpen }}>
+      {children}
+    </DrawerContext.Provider>
+  );
+};
