@@ -7,13 +7,15 @@ import { useDrawerContext } from "../context";
 interface ILayoutBaseDePaginaProps{
     titulo?: string;
     children?: ReactNode;
+    barraDeFerramentas?: ReactNode;
 }
 
 
-export const LayoutBaseDePagina: React.FC<ILayoutBaseDePaginaProps> = ({children, titulo}) => {
+export const LayoutBaseDePagina: React.FC<ILayoutBaseDePaginaProps> = ({children, titulo,barraDeFerramentas}) => {
     
     const theme = useTheme();
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+    const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
     const { toggleDrawerOpen} = useDrawerContext();
 
@@ -27,17 +29,24 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePaginaProps> = ({children
                     </IconButton>
                 )}
 
-                <Typography variant="h5">
+                <Typography
+                 overflow="hidden"
+                 whiteSpace="nowrap" 
+                 textOverflow="ellipsis"
+                 variant={smDown? 'h5' : mdDown ? 'h4': 'h3'}
+                >
                     {titulo} 
                 </Typography>
 
             </Box>
 
-            <Box>
-                Barra de Ferramentas
-            </Box>
+            {barraDeFerramentas &&(
+                <Box>
+                    {barraDeFerramentas} 
+                </Box>
+            )}
 
-            <Box>
+            <Box flex={1} overflow="auto">
                 {children}
             </Box>
         </Box>

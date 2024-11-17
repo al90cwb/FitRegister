@@ -4,6 +4,8 @@ import { indigo, purple } from '@mui/material/colors';
 export const DarkTheme = createTheme({
     //palleta de cores
     palette: {
+        mode: 'dark',
+
         primary:{
             main: purple[500],
             dark: purple[700],
@@ -21,6 +23,11 @@ export const DarkTheme = createTheme({
         background:{
             default: "#202124",//preto
             paper: '#303134',//branco
+        }
+    },
+    typography:{
+        allVariants:{
+            color: 'white',
         }
     }
 })
