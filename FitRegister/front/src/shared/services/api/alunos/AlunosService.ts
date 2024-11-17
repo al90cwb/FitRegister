@@ -1,7 +1,7 @@
 import { Envioriment } from "../../../environment";
 import { Api } from "../axios-config";
 
-interface IListagemAluno {
+export interface  IListagemAlunos {
     id?: string; 
     nome?: string;
     endereco?: string;
@@ -13,7 +13,7 @@ interface IListagemAluno {
     criadoEm?: string; 
 }
 
-interface IDetalheAluno {
+export interface IDetalheAluno {
     id: string; 
     nome?: string;
     endereco?: string;
@@ -26,17 +26,17 @@ interface IDetalheAluno {
 }
 
 type TAlunosComTotalCount ={
-    data: IListagemAluno[];
+    data: IListagemAlunos[];
     totalCount: number;
 }
 
 
 //todos os metodos de crud
-const getAll = async(): Promise<TAlunosComTotalCount | Error> => {
+const getAll = async(page= 1 , filter = ''): Promise<TAlunosComTotalCount | Error> => {
     try {
 
         //verificar esses filtros não temos
-        const urlRelativa = `/api/aluno/listar}`;
+        const urlRelativa = `/api/aluno/listar?_page=${page}&_limits=${Envioriment.LIMITE_DE_LINHAS}&nome_like=${filter}`;
 
         const {data, headers} = await Api.get(urlRelativa); //limitando total de consultas por pagina 
 

@@ -16,10 +16,10 @@ PUT  http://localhost:5253/api/aluno/alterar/
 Content-Type: application/json
 
 {
-   "id": "f25bf218-c98c-47ac-805d-117259216239",
-   "nome": "Fernando Bastos",
-   "endereco": "Alterado, 2",
-   "telefone": "44 Alterado",
+   "id": "f4e68760-523d-47a6-8daa-6b6eb38cd418",
+   "nome": "Carlos Souza",
+   "endereco": "Rua Ososirio, 2",
+   "telefone": "44 41528745",
    "email": "Alterado.santos@gmail",
    "senha": "Alterado123!"
 }

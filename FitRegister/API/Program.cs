@@ -31,9 +31,35 @@ app.UseAuthorization();
 app.UseCors("AllowAll");
 
 // Requisições para aluno
-app.MapGet("/api/aluno/listar", async (AppDataContext ctx) => 
+app.MapGet("/api/aluno/listar", async (AppDataContext ctx, HttpRequest request) => 
 {
-    var alunos = await ctx.Alunos.ToListAsync();
+    // Obtendo parâmetros da query string
+    var page = int.TryParse(request.Query["page"], out var p) ? p : 1;
+    var limit = int.TryParse(request.Query["limit"], out var l) ? l : 10;
+    var nomeLike = request.Query["nome_like"].ToString() ?? string.Empty;
+
+    // Calculando o offset para a paginação
+    var offset = (page - 1) * limit;
+
+    // Buscando os alunos do banco de dados
+    var query = ctx.Alunos.AsQueryable();
+
+    // Aplicando o filtro por nome (se fornecido)
+    if (!string.IsNullOrEmpty(nomeLike))
+    {
+        query = query.Where(a => a.Nome.Contains(nomeLike)); // Certifique-se de que `Nome` é um campo existente
+    }
+
+    // Obtendo o total de registros filtrados
+    var totalCount = await query.CountAsync();
+
+    // Aplicando a paginação
+    var alunos = await query.Skip(offset).Take(limit).ToListAsync();
+
+    // Incluindo o total de registros no cabeçalho de resposta
+    request.HttpContext.Response.Headers.Add("X-Total-Count", totalCount.ToString());
+
+    // Retornando os alunos paginados
     return alunos.Any() ? Results.Ok(alunos) : Results.NotFound("Nenhum aluno encontrado.");
 });
 
