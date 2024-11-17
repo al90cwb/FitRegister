@@ -1,10 +1,10 @@
 import { Routes , Route , Navigate } from "react-router-dom";
-import { Button } from '@mui/material';
 import { useAppThemeContext,useDrawerContext } from "../shared/context";
 import { useEffect } from "react";
+import { Dashboard } from "../pages";
 
 export const AppRoutes = ( ) =>{
-    const {toggleDrawerOpen, setDrawerOptions} = useDrawerContext();
+    const { setDrawerOptions} = useDrawerContext();
 
 
 
@@ -20,13 +20,16 @@ export const AppRoutes = ( ) =>{
     },[]);
 
 
+    //aqui configura as rotas de navegação
     return (
         <Routes>
 
 
-            <Route path="/pagina-inicial" element = {<Button variant='contained'   onClick={toggleDrawerOpen}   color='primary'>Toggle Drawer</Button> } />
-            <Route path="*" element = {<Navigate to  ="/pagina-inicial" />} />
+            <Route path="/pagina-inicial" element = {<Dashboard/> } />
 
+
+
+            <Route path="*" element = {<Navigate to  ="/pagina-inicial" />} />
 
         </Routes>
     );
