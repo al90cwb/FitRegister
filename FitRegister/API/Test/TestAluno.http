@@ -2,15 +2,15 @@
 POST  http://localhost:5253/api/aluno/cadastrar
 Content-Type: application/json
 
-{
-      "nome": "Adriano Counter Strike",
-      "endereco": "Rua das Flores, 12",
-      "telefone": "41 996543210",
-      "email": "felipe.santos@gmail.com",
-      "senha": "felipe789A!",
-      "planoId": "dc7edf4e-19be-4cca-8c21-2648abf563b6"
-}
-
+   {
+        "nome": "Patrícia Lima",
+        "endereco": "Avenida Central, 101",
+        "telefone": "41 994567123",
+        "email": "patricia.lima@gmail.com",
+        "senha": "patricia456!",
+        "planoId": "dc7edf4e-19be-4cca-8c21-2648abf563b6"
+    }
+    
 ### Atualizar Aluno por Id
 PUT  http://localhost:5253/api/aluno/alterar/
 Content-Type: application/json

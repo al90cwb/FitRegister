@@ -41,9 +41,12 @@ const getAll = async(page= 1 , filter = ''): Promise<TAlunosComTotalCount | Erro
         const {data, headers} = await Api.get(urlRelativa); //limitando total de consultas por pagina 
 
         if (data){
+            
+            console.log(headers['x-total-count']);
             return{
                 data,
                 totalCount: Number(headers['x-total-count']  || Envioriment.LIMITE_DE_LINHAS )
+                
             };
         }
         return new Error( 'Erro ao listar os registros');
