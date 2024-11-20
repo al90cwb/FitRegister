@@ -3,6 +3,7 @@ import { useAppThemeContext, useDrawerContext } from "../../context";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 
 
+
 interface IListItemLinkProps {
     to: string;//rota do react para tela onde se quer navegar
     label: string;
@@ -53,7 +54,8 @@ export const MenuLateral : React.FC<IappMenuLateralProvideProps> = ({children}) 
                     <Box width="100%" height={theme.spacing(20)} display="flex" alignItems="center" justifyContent="center">
                         <Avatar
                             sx={{height: theme.spacing(12), width:  theme.spacing(12) }}
-                            src="https://pbs.twimg.com/profile_images/1085239615689293825/XLmISw5p_400x400.jpg" />
+                            // src={"Coloca inmagem aqui"}  não consegui
+                            />
                     </Box>
 
                     <Divider/>

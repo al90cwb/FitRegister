@@ -5,17 +5,8 @@ export const Dashboard = () => {
     
     return(
         <LayoutBaseDePagina
-         titulo= 'Pagina Inicial'
-         barraDeFerramentas={(
-
-            <FerramentasDeDetalhe
-                mostarBotaoApagarCarregando
-
-            />
-            
-         )}
+         titulo= 'Fit Register'
          >
-            Testando
         </LayoutBaseDePagina>
     );
 };

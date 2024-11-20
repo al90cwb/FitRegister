@@ -15,11 +15,11 @@ export interface  IListagemAlunos {
 
 export interface IDetalheAluno {
     id: string; 
-    nome?: string;
-    endereco?: string;
-    telefone?: string;
-    email?: string;
-    planoId?: string;
+    nome: string;
+    endereco: string;
+    telefone: string;
+    email: string;
+    planoId: string;
     professorId?: string;
     treinoId?: string;
     criadoEm?: string; 
