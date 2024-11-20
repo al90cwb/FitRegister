@@ -56,7 +56,8 @@ const getAll = async(page= 1 , filter = ''): Promise<TAlunosComTotalCount | Erro
         return new Error( (error as {message:string}).message ||   'Erro ao listar os registros');
     }
 };
-            
+       
+
 const getById = async(id: string): Promise<IDetalheAluno | Error > => {
     try {
 

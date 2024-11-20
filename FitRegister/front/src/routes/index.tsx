@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { 
     Dashboard,
     ListagemAlunos
-
+    
  } from "../pages";
 
 export const AppRoutes = ( ) =>{
@@ -25,6 +25,11 @@ export const AppRoutes = ( ) =>{
                 label:'Alunos',
                 path: '/alunos'
             },
+            {
+                icon: 'fitness_center',
+                label:'Exercicios',
+                path: '/exercicios'
+            },
         ]);
     },[]);
 
@@ -39,6 +44,7 @@ export const AppRoutes = ( ) =>{
             <Route path="/alunos" element = {<ListagemAlunos/> } />
 
 
+            <Route path="/exericios" element = {<ListagemAlunos/> } />
 
             <Route path="*" element = {<Navigate to  ="/pagina-inicial" />} />
 
