@@ -3,8 +3,8 @@ import { useAppThemeContext,useDrawerContext } from "../shared/context";
 import { useEffect } from "react";
 import { 
     Dashboard,
-    ListagemAlunos
-    
+    ListagemAlunos,
+    DetalheDeAluno
  } from "../pages";
 
 export const AppRoutes = ( ) =>{
@@ -42,9 +42,8 @@ export const AppRoutes = ( ) =>{
             <Route path="/pagina-inicial" element = {<Dashboard/> } />
 
             <Route path="/alunos" element = {<ListagemAlunos/> } />
+            <Route path="/alunos/detalhe/:id" element = {<DetalheDeAluno/> } />
 
-
-            <Route path="/exericios" element = {<ListagemAlunos/> } />
 
             <Route path="*" element = {<Navigate to  ="/pagina-inicial" />} />
 

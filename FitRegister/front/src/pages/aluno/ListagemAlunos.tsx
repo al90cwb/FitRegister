@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { FerramentasDaListagem } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
 import { useEffect, useMemo, useState } from "react";
@@ -12,6 +12,7 @@ export const ListagemAlunos : React.FC = () => {
     
     const [searchParams , setSearchParams] = useSearchParams();
     const {debounce} = useDebounce();
+    const navigate = useNavigate();
 
     const [rows, setRows] = useState<IListagemAlunos[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -62,6 +63,9 @@ export const ListagemAlunos : React.FC = () => {
             .then(result => {
                 if (result instanceof Error){
                     alert (result.message);
+                }else{
+                    window.location.reload(); // Recarrega a página
+                    alert('Registro apagado com sucesso!')
                 }
             });
         }
@@ -75,6 +79,7 @@ export const ListagemAlunos : React.FC = () => {
                 mostrarInputBusca
                 textoDaBusca={busca}
                 textoBotaoNovo="Novo"
+                aoClicarEmNovo={() => navigate("/alunos/detalhe/novo") }
                 aoMudarTextoDaBusca={texto => setSearchParams({busca: texto, pagina:'1'}, {replace: true} )} //replace impede que faça varias rotas
             />
         }
@@ -100,7 +105,7 @@ export const ListagemAlunos : React.FC = () => {
                                 <IconButton size="small" onClick={()=> handleDelete(row.id!)}>
                                     <Icon>delete</Icon>
                                 </IconButton>
-                                <IconButton size="small">
+                                <IconButton size="small" onClick={()=> navigate(`/alunos/detalhe/${row.id!}`)}>
                                     <Icon>edit</Icon>
                                 </IconButton>
 
