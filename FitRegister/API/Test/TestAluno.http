@@ -2,30 +2,30 @@
 POST  http://localhost:5253/api/aluno/cadastrar
 Content-Type: application/json
 
-{
-      "nome": "Adriano Counter Strike",
-      "endereco": "Rua das Flores, 12",
-      "telefone": "41 996543210",
-      "email": "felipe.santos@gmail.com",
-      "senha": "felipe789A!",
-      "planoId": "dc7edf4e-19be-4cca-8c21-2648abf563b6"
-}
-
+   {
+        "nome": "Patrícia Lima",
+        "endereco": "Avenida Central, 101",
+        "telefone": "41 994567123",
+        "email": "patricia.lima@gmail.com",
+        "senha": "patricia456!",
+        "planoId": "dc7edf4e-19be-4cca-8c21-2648abf563b6"
+    }
+    
 ### Atualizar Aluno por Id
 PUT  http://localhost:5253/api/aluno/alterar/
 Content-Type: application/json
 
 {
-   "id": "f25bf218-c98c-47ac-805d-117259216239",
-   "nome": "Fernando Bastos",
-   "endereco": "Alterado, 2",
-   "telefone": "44 Alterado",
+   "id": "5bbca2bf-cdd9-48aa-8508-c52d2f5bdbb2",
+   "nome": "Anderson",
+   "endereco": "Rua Ososirio, 2",
+   "telefone": "44 41528745",
    "email": "Alterado.santos@gmail",
    "senha": "Alterado123!"
 }
 
 ### Buscar Aluno por ID
-GET http://localhost:5253/api/aluno/buscar/f25bf218-c98c-47ac-805d-117259216239
+GET http://localhost:5253/api/aluno/buscar/5bbca2bf-cdd9-48aa-8508-c52d2f5bdbb2
 
 ### Listar todos alunos
 GET http://localhost:5253/api/aluno/listar

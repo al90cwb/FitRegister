@@ -1,0 +1,52 @@
+import { Routes , Route , Navigate } from "react-router-dom";
+import { useAppThemeContext,useDrawerContext } from "../shared/context";
+import { useEffect } from "react";
+import { 
+    Dashboard,
+    ListagemAlunos,
+    DetalheDeAluno
+ } from "../pages";
+
+export const AppRoutes = ( ) =>{
+    const { setDrawerOptions} = useDrawerContext();
+
+
+
+    //aqui configura os menus de navegação
+    useEffect(() =>{
+        setDrawerOptions([
+            {
+                icon: 'home',
+                label:'Pagina Inicial',
+                path: '/pagina-inicial'
+            },
+            {
+                icon: 'people',
+                label:'Alunos',
+                path: '/alunos'
+            },
+            {
+                icon: 'fitness_center',
+                label:'Exercicios',
+                path: '/exercicios'
+            },
+        ]);
+    },[]);
+
+
+    //aqui configura as rotas de navegação
+    return (
+        <Routes>
+
+
+            <Route path="/pagina-inicial" element = {<Dashboard/> } />
+
+            <Route path="/alunos" element = {<ListagemAlunos/> } />
+            <Route path="/alunos/detalhe/:id" element = {<DetalheDeAluno/> } />
+
+
+            <Route path="*" element = {<Navigate to  ="/pagina-inicial" />} />
+
+        </Routes>
+    );
+}
