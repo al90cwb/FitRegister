@@ -1,4 +1,3 @@
-Aqui está uma documentação ajustada e mais estruturada para o seu repositório **FitRegister** no GitHub:
 
 ---
 
@@ -87,5 +86,3 @@ Contribuições são bem-vindas! Siga as etapas abaixo para colaborar:
 Se tiver dúvidas ou sugestões, sinta-se à vontade para abrir uma *issue*. 😊
 
 --- 
-
-Se precisar de mais ajustes ou personalizações, é só avisar!
