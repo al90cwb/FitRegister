@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 import { FerramentasDeDetalhe } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
-import { AlunosService, IDetalheAluno } from "../../shared/services/api/alunos/AlunosService";
+import { PlanosService, IDetalhePlano } from "../../shared/services/api/planos/PlanosService";
 import { VTextField , VForm, useVForm} from "../../shared/forms";
 
 
@@ -15,14 +15,14 @@ import { Form } from "@unform/web";
 
 
 
-// const formValidationSchema : yup.SchemaOf <IDetalheAluno> = yup.object().shape({
+// const formValidationSchema : yup.SchemaOf <IDetalhePlano> = yup.object().shape({
 //     nome : yup.string().required().min(3),
 //     email : yup.string().required().email(),
 //     planoId : yup.string().required(),
 // });
 
 
-export const DetalheDeAluno: React.FC = () => {
+export const DetalheDePlano: React.FC = () => {
 
     const{ id = "novo"} = useParams<'id'>();
     const navigate = useNavigate();
@@ -37,37 +37,35 @@ export const DetalheDeAluno: React.FC = () => {
         if(id !== 'novo'){
             setIsLoading(true);
 
-            AlunosService.getById(id)
+            PlanosService.getById(id)
                 .then((result) => {
                     setIsLoading(false);
                     if (result instanceof Error ){
                        alert(result.message)
-                       navigate('/alunos');
+                       navigate('/planos');
                     }else{
-                        setIsNome(result.nome!);
+                        setIsNome(result.nomePlano!);
                         console.log(result );
                         fomrRef.current?.setData(result);
                     };
                 });
         }else{
             fomrRef.current?.setData({
-                nome:'',
-                email:'',
-                telefone: '',
-                endereco:'',
-                senha: '',
-                planoId: '',
+                id:'',
+                nomePlano: '',
+                valor:'',
+                parcelas: '',
             })
         }
 
 
     },[id]);
 
-    const handleSave = (dados : IDetalheAluno) => {
+    const handleSave = (dados : IDetalhePlano) => {
         setIsLoading(true);
 
 
-        if (dados.nome.length <3  ) {
+        if (!dados.nomePlano || dados.nomePlano.length < 3) {
             fomrRef.current?.setFieldError('nome','O campo precisa ser prenchido');
             setIsLoading(false);
             return
@@ -75,16 +73,16 @@ export const DetalheDeAluno: React.FC = () => {
 
         if (id == 'novo'){
 
-            AlunosService.create(dados)
+            PlanosService.create(dados)
                 .then((result) =>  {
                         setIsLoading(false);
                         if(result instanceof Error){
                             alert(result.message);
                         }else{
                             if(isSaveAndClose()){
-                                navigate('/alunos')
+                                navigate('/planos')
                             }else{
-                                navigate(`/alunos/detalhe/${result}`);
+                                navigate(`/planos/detalhe/${result}`);
                             }
                         }
                 })
@@ -94,14 +92,14 @@ export const DetalheDeAluno: React.FC = () => {
             const updatedData = { ...dados, id };  // Adiciona o id aos dados
             console.log(updatedData);
             
-            AlunosService.updateById(updatedData)
+            PlanosService.updateById(updatedData)
                 .then((result) =>  {
                     setIsLoading(false);
                         if(result instanceof Error){
                             alert(result.message);
                         }else{
                             if(isSaveAndClose()){
-                                navigate('/alunos')
+                                navigate('/planos')
                             }
                         }
                 })
@@ -112,12 +110,12 @@ export const DetalheDeAluno: React.FC = () => {
     const handleDelete = (id : string  ) => {
         // eslint-disable-next-line no-restricted-globals
         if (confirm( 'Realmente deseja apagar?') ){
-            AlunosService.deleteById(id)
+            PlanosService.deleteById(id)
             .then(result => {
                 if (result instanceof Error){
                     alert (result.message);
                 }else{
-                    navigate('/alunos');
+                    navigate('/planos');
                     alert('Registro apagado com sucesso!')
                 }
             });
@@ -126,7 +124,7 @@ export const DetalheDeAluno: React.FC = () => {
     
     return(
         <LayoutBaseDePagina 
-            titulo={id ==='novo' ? 'Novo Aluno' : nome}
+            titulo={id ==='novo' ? 'Novo Plano' : nome}
             barraDeFerramentas={
                 <FerramentasDeDetalhe
                     mostarBotaoSalvarEFechar
@@ -136,8 +134,8 @@ export const DetalheDeAluno: React.FC = () => {
                     aoClicarEmSalvar={save}
                     aoClicarEmSalvarEFechar={saveAndClose}
                     aoClicarEmApagar={() =>handleDelete(id)}
-                    aoClicarEmNovo={() => navigate('/alunos/detalhe/novo')}
-                    aoClicarEmVoltar={() => navigate('/alunos')}
+                    aoClicarEmNovo={() => navigate('/planos/detalhe/novo')}
+                    aoClicarEmVoltar={() => navigate('/planos')}
 
                 />
             }
@@ -163,8 +161,8 @@ export const DetalheDeAluno: React.FC = () => {
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
                             <VTextField 
                                 fullWidth
-                                label="Nome Completo"
-                                name='nome'
+                                label="Nome do Plano"
+                                name='nomePlano'
                                 disabled={isLoading}
                                 onChange={e => setIsNome(e.target.value)}
                             />
@@ -175,8 +173,8 @@ export const DetalheDeAluno: React.FC = () => {
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
                                 <VTextField 
                                 fullWidth
-                                label="Endereço" 
-                                name='endereco'
+                                label="Valor" 
+                                name='valor'
                                 disabled={isLoading}
                             />
                             </Grid>
@@ -186,42 +184,10 @@ export const DetalheDeAluno: React.FC = () => {
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
                             <VTextField 
                                 fullWidth
-                                label="Telefone" 
-                                name='telefone'
+                                label="Parcelas" 
+                                name='parcelas'
                                 disabled={isLoading}
                             />
-                            </Grid>
-                        </Grid>
-                    
-                        <Grid container item direction="row"  spacing={2}>
-                            <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                            <VTextField 
-                                label="E-mail" 
-                                name='email'
-                                disabled={isLoading}
-                            />
-                            </Grid>
-                        </Grid>
-
-                        <Grid container item direction="row"  spacing={2}>
-                            <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                            <VTextField 
-                                fullWidth
-                                label="Senha" 
-                                name='senha'
-                                disabled={isLoading}
-                                />
-                            </Grid>
-                        </Grid>
-
-                        <Grid container item direction="row"  spacing={2}>
-                            <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                            <VTextField 
-                                fullWidth
-                                label="Plano" 
-                                name='planoId'
-                                disabled={isLoading}
-                                />
                             </Grid>
                         </Grid>
 

@@ -12,10 +12,8 @@ public class Plano
     [Required(ErrorMessage = "O Valor do plano é obrigatório.")]
     public decimal Valor { get; set; }
     [Required(ErrorMessage = "A quantidade de parcelas é obrigatório.")]
-    public int? Parcelas { get; set; }
-    public ICollection<Aluno> Alunos { get; set; } = new List<Aluno>();
+    public int Parcelas { get; set; }
     public DateTime CriadoEm { get; set; }
-
     // Construtor sem parâmetros
     public Plano()
     {

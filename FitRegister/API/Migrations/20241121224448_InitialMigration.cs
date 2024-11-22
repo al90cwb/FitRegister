@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,12 +16,12 @@ namespace API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    GrupoMuscular = table.Column<string>(type: "TEXT", nullable: false),
-                    Descricao = table.Column<string>(type: "TEXT", nullable: false),
-                    Repeticoes = table.Column<int>(type: "INTEGER", nullable: false),
-                    TempoDescanso = table.Column<int>(type: "INTEGER", nullable: false),
-                    CriadoEm = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Nome = table.Column<string>(type: "TEXT", nullable: true),
+                    GrupoMuscular = table.Column<string>(type: "TEXT", nullable: true),
+                    Descricao = table.Column<string>(type: "TEXT", nullable: true),
+                    Repeticoes = table.Column<int>(type: "INTEGER", nullable: true),
+                    TempoDescanso = table.Column<int>(type: "INTEGER", nullable: true),
+                    CriadoEm = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,7 +99,7 @@ namespace API.Migrations
                         column: x => x.PlanoId,
                         principalTable: "Planos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Alunos_Professores_ProfessorId",
                         column: x => x.ProfessorId,
@@ -113,7 +113,7 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExercicioTreino",
+                name: "TreinoExercicio",
                 columns: table => new
                 {
                     ExerciciosId = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -121,15 +121,15 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExercicioTreino", x => new { x.ExerciciosId, x.TreinosId });
+                    table.PrimaryKey("PK_TreinoExercicio", x => new { x.ExerciciosId, x.TreinosId });
                     table.ForeignKey(
-                        name: "FK_ExercicioTreino_Exercicios_ExerciciosId",
+                        name: "FK_TreinoExercicio_Exercicios_ExerciciosId",
                         column: x => x.ExerciciosId,
                         principalTable: "Exercicios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ExercicioTreino_Treinos_TreinosId",
+                        name: "FK_TreinoExercicio_Treinos_TreinosId",
                         column: x => x.TreinosId,
                         principalTable: "Treinos",
                         principalColumn: "Id",
@@ -152,8 +152,8 @@ namespace API.Migrations
                 column: "TreinoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExercicioTreino_TreinosId",
-                table: "ExercicioTreino",
+                name: "IX_TreinoExercicio_TreinosId",
+                table: "TreinoExercicio",
                 column: "TreinosId");
         }
 
@@ -164,7 +164,7 @@ namespace API.Migrations
                 name: "Alunos");
 
             migrationBuilder.DropTable(
-                name: "ExercicioTreino");
+                name: "TreinoExercicio");
 
             migrationBuilder.DropTable(
                 name: "Planos");

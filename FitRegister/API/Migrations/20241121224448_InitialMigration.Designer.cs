@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20241020231321_Mudanças")]
-    partial class Mudanças
+    [Migration("20241121224448_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,7 +114,8 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Valor")
+                    b.Property<decimal?>("Valor")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -200,9 +201,9 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Aluno", b =>
                 {
                     b.HasOne("API.Models.Plano", "Plano")
-                        .WithMany("Alunos")
+                        .WithMany()
                         .HasForeignKey("PlanoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Models.Professor", null)
@@ -229,11 +230,6 @@ namespace API.Migrations
                         .HasForeignKey("TreinosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("API.Models.Plano", b =>
-                {
-                    b.Navigation("Alunos");
                 });
 
             modelBuilder.Entity("API.Models.Professor", b =>
