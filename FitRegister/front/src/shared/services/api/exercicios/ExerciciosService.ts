@@ -1,33 +1,37 @@
 import { Envioriment } from "../../../environment";
 import { Api } from "../axios-config";
 
-export interface  IListagemPlanos {
+export interface  IListagemExercicios {
     id?: string; 
-    nomePlano?: string;
-    valor?: number;
-    parcelas?: number;
+    nome?: string;
+    grupoMuscular?: string;
+    descricao?: string;
+    repeticoes?: number;
+    tempoDescanso?: string;
     criadoEm?: string; 
 }
 
-export interface IDetalhePlano {
+export interface IDetalheExercicio {
     id: string; 
-    nomePlano: string;
-    valor: number;
-    parcelas: number;
+    nome: string;
+    grupoMuscular: string;
+    descricao: string;
+    repeticoes: number;
+    tempoDescanso: number;
 }
 
-type TPlanosComTotalCount ={
-    data: IListagemPlanos[];
+type TExerciciosComTotalCount ={
+    data: IListagemExercicios[];
     totalCount: number;
 }
 
 
 //todos os metodos de crud
-const getAll = async(page= 1 , filter = ''): Promise<TPlanosComTotalCount | Error> => {
+const getAll = async(page= 1 , filter = ''): Promise<TExerciciosComTotalCount | Error> => {
     try {
 
         //verificar esses filtros não temos
-        const urlRelativa = `/api/plano/listar?_page=${page}&_limits=${Envioriment.LIMITE_DE_LINHAS}&nome_like=${filter}`;
+        const urlRelativa = `/api/exercicios/listar?_page=${page}&_limits=${Envioriment.LIMITE_DE_LINHAS}&nome_like=${filter}`;
 
         const {data, headers} = await Api.get(urlRelativa); //limitando total de consultas por pagina 
 
@@ -49,11 +53,11 @@ const getAll = async(page= 1 , filter = ''): Promise<TPlanosComTotalCount | Erro
 };
        
 
-const getById = async(id: string): Promise<IDetalhePlano | Error > => {
+const getById = async(id: string): Promise<IDetalheExercicio | Error > => {
     try {
 
         //verificar esses filtros não temos
-        const urlRelativa = `/api/plano/buscar/${id}`;
+        const urlRelativa = `/api/exercicios/buscar/${id}`;
 
         const {data} = await Api.get(urlRelativa); //limitando total de consultas por pagina 
 
@@ -69,11 +73,11 @@ const getById = async(id: string): Promise<IDetalhePlano | Error > => {
     }
 };
 
-const create = async(dados: Omit<IDetalhePlano, 'id'>): Promise<string | Error > => {
+const create = async(dados: Omit<IDetalheExercicio, 'id'>): Promise<string | Error > => {
     try {
 
 
-        const {data} = await Api.post<IDetalhePlano>(`/api/plano/cadastrar`, dados); 
+        const {data} = await Api.post<IDetalheExercicio>(`/api/exercicios/cadastrar`, dados); 
 
         if (data){
             return data.id;
@@ -87,9 +91,27 @@ const create = async(dados: Omit<IDetalhePlano, 'id'>): Promise<string | Error >
     }
 };
 
-const updateById = async( dados: Omit<IDetalhePlano, 'criadoEm'>): Promise<void | Error > => {
+const createList = async(dados: Omit<IDetalheExercicio, 'id'>): Promise<string | Error > => {
     try {
-        await Api.put<IDetalhePlano>(`/api/plano/alterar/`,dados); 
+
+
+        const {data} = await Api.post<IDetalheExercicio>(`/api/exercicios/cadastrarlista`, dados); 
+
+        if (data){
+            return data.id;
+        }
+        
+        return new Error( 'Erro ao consultar o registro');
+
+    } catch (error) {
+        console.error(error);
+        return new Error( (error as {message:string}).message ||   'Erro ao criar o registro');
+    }
+};
+
+const updateById = async( dados: Omit<IDetalheExercicio, 'criadoEm'>): Promise<void | Error > => {
+    try {
+        await Api.put<IDetalheExercicio>(`/api/exercicios/alterar/`,dados); 
     } catch (error) {
         console.error(error);
         return new Error( (error as {message:string}).message ||   'Erro ao atualizar o registro');
@@ -98,7 +120,7 @@ const updateById = async( dados: Omit<IDetalhePlano, 'criadoEm'>): Promise<void 
 
 const deleteById = async(id: string): Promise<void | Error> => {
     try {
-        await Api.delete<IDetalhePlano>(`/api/plano/deletar/${id}`); 
+        await Api.delete<IDetalheExercicio>(`/api/exercicios/deletar/${id}`); 
     } catch (error) {
         console.error(error);
         return new Error( (error as {message:string}).message ||   'Erro ao deletar o registro');
@@ -106,10 +128,11 @@ const deleteById = async(id: string): Promise<void | Error> => {
 };
 
 
-export const PlanosService = {
+export const ExerciciosService = {
     getAll,
     getById,
     create,
+    createList,
     updateById,
     deleteById,
 }

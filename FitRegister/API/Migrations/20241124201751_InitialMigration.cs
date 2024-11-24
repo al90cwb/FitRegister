@@ -61,29 +61,12 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Treinos",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    Finalidade = table.Column<string>(type: "TEXT", nullable: true),
-                    Descricao = table.Column<string>(type: "TEXT", nullable: true),
-                    NivelTreino = table.Column<string>(type: "TEXT", nullable: true),
-                    CriadoEm = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Treinos", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Alunos",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     PlanoId = table.Column<Guid>(type: "TEXT", nullable: false),
                     ProfessorId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    TreinoId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Nome = table.Column<string>(type: "TEXT", nullable: false),
                     Endereco = table.Column<string>(type: "TEXT", nullable: false),
                     Telefone = table.Column<string>(type: "TEXT", nullable: false),
@@ -105,35 +88,6 @@ namespace API.Migrations
                         column: x => x.ProfessorId,
                         principalTable: "Professores",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Alunos_Treinos_TreinoId",
-                        column: x => x.TreinoId,
-                        principalTable: "Treinos",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TreinoExercicio",
-                columns: table => new
-                {
-                    ExerciciosId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TreinosId = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TreinoExercicio", x => new { x.ExerciciosId, x.TreinosId });
-                    table.ForeignKey(
-                        name: "FK_TreinoExercicio_Exercicios_ExerciciosId",
-                        column: x => x.ExerciciosId,
-                        principalTable: "Exercicios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TreinoExercicio_Treinos_TreinosId",
-                        column: x => x.TreinosId,
-                        principalTable: "Treinos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -145,16 +99,6 @@ namespace API.Migrations
                 name: "IX_Alunos_ProfessorId",
                 table: "Alunos",
                 column: "ProfessorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Alunos_TreinoId",
-                table: "Alunos",
-                column: "TreinoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TreinoExercicio_TreinosId",
-                table: "TreinoExercicio",
-                column: "TreinosId");
         }
 
         /// <inheritdoc />
@@ -164,19 +108,13 @@ namespace API.Migrations
                 name: "Alunos");
 
             migrationBuilder.DropTable(
-                name: "TreinoExercicio");
+                name: "Exercicios");
 
             migrationBuilder.DropTable(
                 name: "Planos");
 
             migrationBuilder.DropTable(
                 name: "Professores");
-
-            migrationBuilder.DropTable(
-                name: "Exercicios");
-
-            migrationBuilder.DropTable(
-                name: "Treinos");
         }
     }
 }

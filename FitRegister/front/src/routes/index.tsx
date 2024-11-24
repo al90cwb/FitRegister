@@ -10,6 +10,8 @@ import {
  } from "../pages";
 import { ListagemProfessores } from "../pages/professor/ListagemProfessores";
 import { DetalheDeProfessor } from "../pages/professor/DetalheDeProfessor";
+import { DetalheDeExercicio } from "../pages/exercicio/DetalheDeExercicio";
+import { ListagemExercicios } from "../pages/exercicio/ListagemDeExercicio";
 
 export const AppRoutes = ( ) =>{
     const { setDrawerOptions} = useDrawerContext();
@@ -60,6 +62,9 @@ export const AppRoutes = ( ) =>{
 
             <Route path="/planos" element = {<ListagemPlanos/> } />
             <Route path="/planos/detalhe/:id" element = {<DetalheDePlano/> } />
+
+            <Route path="/exercicios" element = {<ListagemExercicios/> } />
+            <Route path="/exercicios/detalhe/:id" element = {<DetalheDeExercicio/> } />
 
             <Route path="/professores" element = {<ListagemProfessores/> } />
             <Route path="/professores/detalhe/:id" element = {<DetalheDeProfessor/> } />

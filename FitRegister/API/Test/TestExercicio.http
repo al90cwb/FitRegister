@@ -17,21 +17,22 @@ GET http://localhost:5253/api/exercicios/listar
 GET http://localhost:5253/api/exercicios/buscarPorNome/Teste Avançado
 
 ### Buscar exercicios por ID
-GET http://localhost:5253/api/exercicios/buscar/57aecd02-7f37-4626-8d1f-8223e35872de
+GET http://localhost:5253/api/exercicios/buscar/9ddea3d8-ce64-489d-94ae-3c0868a9627d
 
 ### Deletar exercicios
-DELETE http://localhost:5253/api/exercicios/deletar/0591b045-4d43-4dd8-97d4-a90c9f2c7d94
+DELETE http://localhost:5253/api/exercicios/deletar/9ddea3d8-ce64-489d-94ae-3c0868a9627d
 
 ### Alterar exercicios por ID
-PUT http://localhost:5253/api/exercicios/alterar/57aecd02-7f37-4626-8d1f-8223e35872de
+PUT http://localhost:5253/api/exercicios/alterar
 Content-Type: application/json
 
 {
-  "Nome": "Teste Avançado",
+  "id" : "039e4b38-f83e-46fa-a73b-34cad897650a",
+  "nome": "Teste Avançado",
   "grupoMuscular": "Pernas",
-  "Descricao": "Exercício que foca nos músculos isquiotibiais e glúteos.",
-  "Repeticoes": 12,
-  "TempoDescanso": 60
+  "descricao": "Exercício que foca nos músculos isquiotibiais e glúteos.",
+  "repeticoes": 12,
+  "tempoDescanso": 60
 }
 
 ### Cadastrar lista de exercicios
