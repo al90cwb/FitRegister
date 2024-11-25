@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20241020231321_Mudanças")]
-    partial class Mudanças
+    [Migration("20241124201751_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,16 +54,11 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("TreinoId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PlanoId");
 
                     b.HasIndex("ProfessorId");
-
-                    b.HasIndex("TreinoId");
 
                     b.ToTable("Alunos");
                 });
@@ -110,8 +105,7 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Parcelas")
-                        .IsRequired()
+                    b.Property<int>("Parcelas")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Valor")
@@ -155,93 +149,22 @@ namespace API.Migrations
                     b.ToTable("Professores");
                 });
 
-            modelBuilder.Entity("API.Models.Treino", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Finalidade")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NivelTreino")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Treinos");
-                });
-
-            modelBuilder.Entity("ExercicioTreino", b =>
-                {
-                    b.Property<Guid>("ExerciciosId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("TreinosId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ExerciciosId", "TreinosId");
-
-                    b.HasIndex("TreinosId");
-
-                    b.ToTable("TreinoExercicio", (string)null);
-                });
-
             modelBuilder.Entity("API.Models.Aluno", b =>
                 {
                     b.HasOne("API.Models.Plano", "Plano")
-                        .WithMany("Alunos")
+                        .WithMany()
                         .HasForeignKey("PlanoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Models.Professor", null)
                         .WithMany("Alunos")
                         .HasForeignKey("ProfessorId");
 
-                    b.HasOne("API.Models.Treino", null)
-                        .WithMany("Alunos")
-                        .HasForeignKey("TreinoId");
-
                     b.Navigation("Plano");
                 });
 
-            modelBuilder.Entity("ExercicioTreino", b =>
-                {
-                    b.HasOne("API.Models.Exercicio", null)
-                        .WithMany()
-                        .HasForeignKey("ExerciciosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Models.Treino", null)
-                        .WithMany()
-                        .HasForeignKey("TreinosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("API.Models.Plano", b =>
-                {
-                    b.Navigation("Alunos");
-                });
-
             modelBuilder.Entity("API.Models.Professor", b =>
-                {
-                    b.Navigation("Alunos");
-                });
-
-            modelBuilder.Entity("API.Models.Treino", b =>
                 {
                     b.Navigation("Alunos");
                 });

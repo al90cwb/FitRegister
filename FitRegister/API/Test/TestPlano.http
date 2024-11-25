@@ -1,5 +1,5 @@
 ### Buscar por nome
-GET http://localhost:5253/api/plano/buscar/Plano Para Teste
+GET http://localhost:5253/api/plano/buscar/f8794b29-b2cf-4fda-b1e0-f8b6c435621c
 
 ### Listar todos Planos
 GET http://localhost:5253/api/plano/listar
@@ -21,16 +21,17 @@ POST http://localhost:5253/api/plano/cadastrar
 Content-Type: application/json
 
 {
-    "nomePlano": "Plano de jogo",
+    "nomePlano": "Plano 2",
     "valor": 250,
     "parcelas": 4
 }
 
 ### Atualizar plano
-PUT http://localhost:5253/api/plano/atualizar/4ba18d0c-25c9-4f64-8cac-89cf9a951742
+PUT http://localhost:5253/api/plano/atualizar
 Content-Type: application/json
 
 {
+    "id" : "9b60d6aa-afbf-4bf3-8d31-1f9282a35d5b",
     "nomePlano" : "Plano",
     "valor" : 3500,
     "parcelas": 1

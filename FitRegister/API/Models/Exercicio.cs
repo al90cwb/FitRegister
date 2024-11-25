@@ -18,8 +18,6 @@ public class Exercicio
     public int? Repeticoes { get; set; }
     //[Required(ErrorMessage = "E necessário definir o tempo de descanço para o exercicio.")]
     public int? TempoDescanso { get; set; }
-    [JsonIgnore]
-    public List<Treino>? Treinos { get; set; } = new List<Treino>(); 
     public DateTime? CriadoEm { get; set; }
     public Exercicio()
     {

@@ -4,8 +4,14 @@ import { useEffect } from "react";
 import { 
     Dashboard,
     ListagemAlunos,
-    DetalheDeAluno
+    DetalheDeAluno,
+    DetalheDePlano,
+    ListagemPlanos
  } from "../pages";
+import { ListagemProfessores } from "../pages/professor/ListagemProfessores";
+import { DetalheDeProfessor } from "../pages/professor/DetalheDeProfessor";
+import { DetalheDeExercicio } from "../pages/exercicio/DetalheDeExercicio";
+import { ListagemExercicios } from "../pages/exercicio/ListagemDeExercicio";
 
 export const AppRoutes = ( ) =>{
     const { setDrawerOptions} = useDrawerContext();
@@ -30,6 +36,16 @@ export const AppRoutes = ( ) =>{
                 label:'Exercicios',
                 path: '/exercicios'
             },
+            {
+                icon: 'folder',
+                label:'Planos',
+                path: '/planos'
+            },
+            {
+                icon: 'people',
+                label:'Professores',
+                path: '/professores'
+            }
         ]);
     },[]);
 
@@ -44,6 +60,14 @@ export const AppRoutes = ( ) =>{
             <Route path="/alunos" element = {<ListagemAlunos/> } />
             <Route path="/alunos/detalhe/:id" element = {<DetalheDeAluno/> } />
 
+            <Route path="/planos" element = {<ListagemPlanos/> } />
+            <Route path="/planos/detalhe/:id" element = {<DetalheDePlano/> } />
+
+            <Route path="/exercicios" element = {<ListagemExercicios/> } />
+            <Route path="/exercicios/detalhe/:id" element = {<DetalheDeExercicio/> } />
+
+            <Route path="/professores" element = {<ListagemProfessores/> } />
+            <Route path="/professores/detalhe/:id" element = {<DetalheDeProfessor/> } />
 
             <Route path="*" element = {<Navigate to  ="/pagina-inicial" />} />
 
