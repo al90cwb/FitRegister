@@ -8,7 +8,8 @@ Content-Type: application/json
         "telefone": "41 994567123",
         "email": "patricia.lima@gmail.com",
         "senha": "patricia456!",
-        "planoId": "dc7edf4e-19be-4cca-8c21-2648abf563b6"
+        "planoId": "334db27f-d803-4c58-b179-1058069bdfa4",
+        "exercicioId" : "d0d2514b-d593-4715-a45b-33d748326e1f"
     }
     
 ### Atualizar Aluno por Id
@@ -25,10 +26,16 @@ Content-Type: application/json
 }
 
 ### Buscar Aluno por ID
-GET http://localhost:5253/api/aluno/buscar/5bbca2bf-cdd9-48aa-8508-c52d2f5bdbb2
+GET http://localhost:5253/api/aluno/buscar/5077cdbc-355c-4758-a0ac-4aad7941bfbf
 
 ### Listar todos alunos
 GET http://localhost:5253/api/aluno/listar
 
 ### Deletar por Id
 DELETE http://localhost:5253/api/aluno/deletar/f25bf218-c98c-47ac-805d-117259216239
+
+###
+PUT  http://localhost:5253/api/aluno/add-exercicio/5077cdbc-355c-4758-a0ac-4aad7941bfbf
+Content-Type: application/json
+
+"3e2280bf-69b9-4872-bb0c-634a3a8a1935"

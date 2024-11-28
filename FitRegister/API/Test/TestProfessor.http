@@ -7,7 +7,8 @@ Content-Type: application/json
     "endereco": "Rua das Flores, 123",
     "telefone": "1234-5678",
     "email": "joao.silva@example.com",
-    "senha": "senhaSegura123!"
+    "senha": "senhaSegura123!",
+    "exercicioId" : "d0d2514b-d593-4715-a45b-33d748326e1f"
 }
 
 ###listar

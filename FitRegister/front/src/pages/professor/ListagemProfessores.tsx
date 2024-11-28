@@ -102,6 +102,9 @@ export const ListagemProfessores : React.FC = () => {
                         {rows.map(row =>(
                             <TableRow key= {row.id}>
                             <TableCell>
+                            <IconButton size="small" onClick={() => navigate(`/professores/visualizar/${row.id!}`)}>
+                                    <Icon>visibility</Icon>
+                                </IconButton>
                                 <IconButton size="small" onClick={()=> handleDelete(row.id!)}>
                                     <Icon>delete</Icon>
                                 </IconButton>

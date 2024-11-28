@@ -1,4 +1,5 @@
 using API.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,7 +43,11 @@ app.MapGet("/api/aluno/listar", async (AppDataContext ctx, HttpRequest request) 
     var offset = (page - 1) * limit;
 
     // Buscando os alunos do banco de dados
-    var query = ctx.Alunos.AsQueryable();
+    var query = ctx.Alunos
+        .Include(a => a.Exercicio)
+        .Include(b => b.Plano)
+        .AsQueryable();
+    
 
     // Aplicando o filtro por nome (se fornecido)
     if (!string.IsNullOrEmpty(nomeLike))
@@ -65,7 +70,7 @@ app.MapGet("/api/aluno/listar", async (AppDataContext ctx, HttpRequest request) 
 
 app.MapPost("/api/aluno/cadastrar", async (AppDataContext ctx, Aluno aluno) => 
 {
-    var alunoNovo = new Aluno(aluno.Nome, aluno.Endereco, aluno.Telefone, aluno.Email, aluno.Senha, aluno.PlanoId);
+    var alunoNovo = new Aluno(aluno.Nome, aluno.Endereco, aluno.Telefone, aluno.Email, aluno.Senha, aluno.PlanoId, aluno.ExercicioId);
     ctx.Alunos.Add(alunoNovo);
     await ctx.SaveChangesAsync();
     return Results.Ok(alunoNovo);
@@ -73,8 +78,36 @@ app.MapPost("/api/aluno/cadastrar", async (AppDataContext ctx, Aluno aluno) =>
 
 app.MapGet("/api/aluno/buscar/{id}", async (AppDataContext ctx, Guid id) => 
 {
-    var aluno = await ctx.Alunos.Include(a => a.Plano).FirstOrDefaultAsync(a => a.Id == id);
+    var aluno = await ctx.Alunos.Include(a => a.Plano).Include(a => a.Exercicio).FirstOrDefaultAsync(a => a.Id == id);
+    Console.WriteLine(aluno.Plano);
     return aluno is not null ? Results.Ok(aluno) : Results.NotFound("Aluno não encontrado.");
+});
+
+app.MapPut("/api/aluno/add-exercicio/{id}", async (AppDataContext ctx, Guid id, [FromBody] Guid exercicioId) =>
+{
+    // Procurando o aluno pelo ID
+    var aluno = await ctx.Alunos.Include(a => a.Exercicio).FirstOrDefaultAsync(a => a.Id == id);
+
+    if (aluno == null)
+    {
+        return Results.NotFound("Aluno não encontrado.");
+    }
+
+    // Procurando o exercício pelo ID
+    var exercicio = await ctx.Exercicios.FindAsync(exercicioId);
+
+    if (exercicio == null)
+    {
+        return Results.NotFound("Exercício não encontrado.");
+    }
+
+    // Associando o exercício ao aluno
+    aluno.ExercicioId = exercicioId;
+
+    // Salvando as mudanças no banco de dados
+    await ctx.SaveChangesAsync();
+
+    return Results.Ok(aluno);  // Retorna o aluno atualizado com o exercício
 });
 
 app.MapDelete("/api/aluno/deletar/{id}", async (AppDataContext ctx, Guid id) => 
@@ -108,7 +141,7 @@ app.MapPut("/api/aluno/alterar", async (AppDataContext ctx, Aluno alunoUpdt) =>
 //Requisições para professor
 app.MapPost("/api/professor/cadastrar", async (AppDataContext ctx, Professor professor) => 
 {
-    var professorNovo = new Professor(professor.Nome, professor.Endereco, professor.Telefone, professor.Email, professor.Senha);
+    var professorNovo = new Professor(professor.Nome, professor.Endereco, professor.Telefone, professor.Email, professor.Senha, professor.ExercicioId);
     ctx.Professores.Add(professorNovo);
     await ctx.SaveChangesAsync();
     return Results.Ok(professorNovo);
@@ -245,104 +278,12 @@ app.MapPut("/api/exercicios/alterar", async (AppDataContext ctx, Exercicio exerc
     return Results.Ok(exercicio);
 });
 
-// //Requisições para treino
-// app.MapGet("/api/treinos/listar", async (AppDataContext ctx) =>
-// {
-//     var treinos = await ctx.Treinos.ToListAsync();
-//     return treinos.Any() ? Results.Ok(treinos) : Results.NotFound("Nenhum treino encontrado!");
-// });
-
-// app.MapGet("/api/treinos/buscarPorId/{id}", async (AppDataContext ctx, Guid id) =>
-// {
-//     var treino = await ctx.Treinos
-//         .Include(t => t.Exercicios)
-//         .ThenInclude(e => e.Treinos)
-//         .FirstOrDefaultAsync(t => t.Id == id);
-
-//     return treino is not null ? Results.Ok(treino) : Results.NotFound($"Nenhum treino encontrado com o ID '{id}'.");
-// });
-
-// app.MapGet("/api/treinos/buscarPorNome/{nome}", async (AppDataContext ctx, string nome) =>
-// {
-//     var treino = await ctx.Treinos
-//         .Include(t => t.Exercicios)
-//         .ThenInclude(e => e.Treinos)
-//         .FirstOrDefaultAsync(t => t.Nome == nome);
-
-//     return treino is not null ? Results.Ok(treino) : Results.NotFound($"Nenhum treino encontrado com o nome '{nome}'.");
-// });
-
-// app.MapPost("/api/treinos/cadastrar", async (AppDataContext ctx, Treino treino) =>
-// {
-//     if (treino == null)
-//     {
-//         return Results.BadRequest("Treino não pode ser nulo.");
-//     }
-
-//     if (treino.Exercicios != null && treino.Exercicios.Any())
-//     {
-//         var exercicios = await ctx.Exercicios
-//             .Where(e => treino.Exercicios.Select(ex => ex.Id).Contains(e.Id))
-//             .ToListAsync();
-//         treino.Exercicios = exercicios;
-//     }
-
-//     ctx.Treinos.Add(treino);
-//     await ctx.SaveChangesAsync();
-
-//     return Results.Created($"/api/treinos/{treino.Id}", treino);
-// });
-
-// app.MapDelete("/api/treinos/deletar/{id}", async (AppDataContext ctx, Guid id) =>
-// {
-//     var treino = await ctx.Treinos.FindAsync(id);
-//     if (treino == null)
-//     {
-//         return Results.NotFound($"Nenhum treino encontrado com o ID '{id}'.");
-//     }
-
-//     ctx.Treinos.Remove(treino);
-//     await ctx.SaveChangesAsync();
-//     return Results.NoContent();
-// });
-
-// app.MapPut("/api/treinos/alterar/{id}", async (AppDataContext ctx, Guid id, Treino treinoAlterado) =>
-// {
-//     var treinoExistente = await ctx.Treinos
-//         .Include(t => t.Exercicios)
-//         .FirstOrDefaultAsync(t => t.Id == id);
-
-//     if (treinoExistente == null)
-//     {
-//         return Results.NotFound($"Nenhum treino encontrado com o ID '{id}'.");
-//     }
-
-//     treinoExistente.Nome = treinoAlterado.Nome;
-//     treinoExistente.Finalidade = treinoAlterado.Finalidade;
-//     treinoExistente.Descricao = treinoAlterado.Descricao;
-//     treinoExistente.NivelTreino = treinoAlterado.NivelTreino;
-
-//     treinoExistente.Exercicios.Clear();
-//     foreach (var exercicio in treinoAlterado.Exercicios)
-//     {
-//         var exercicioExistente = await ctx.Exercicios.FindAsync(exercicio.Id);
-//         if (exercicioExistente != null)
-//         {
-//             treinoExistente.Exercicios.Add(exercicioExistente);
-//         }
-//     }
-
-//     await ctx.SaveChangesAsync();
-//     return Results.Ok(treinoExistente);
-// });
-
 //Requisições para plano
 app.MapPost("/api/plano/cadastrar", async (AppDataContext ctx, Plano plano) =>
 {
-    var planoNovo = new Plano(plano.NomePlano, plano.Valor, plano.Parcelas);
-    ctx.Planos.Add(planoNovo);
+    ctx.Planos.Add(plano);
     await ctx.SaveChangesAsync();
-    return Results.Ok(planoNovo);
+    return Results.Ok(plano);
 });
 
 app.MapPut("/api/plano/atualizar/", async (AppDataContext ctx, Plano planoAlterado) =>
@@ -440,6 +381,28 @@ app.MapGet("/api/dashboard", async (AppDataContext context) =>
     };
 
     return Results.Ok(data);
+});
+
+//login
+app.MapPost("/api/login", async( AppDataContext ctx, LoginRequest request) =>
+{
+    if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Senha))
+    {
+        return Results.BadRequest("Email e senha são obrigatórios.");
+    }
+    var aluno = await ctx.Alunos.FirstOrDefaultAsync(a => a.Email == request.Email);
+    if(aluno != null && aluno.Senha == request.Senha)
+    {
+        return Results.Ok(new { Role = "Aluno", Nome = aluno.Nome, Id = aluno.Id });
+    }
+
+    var professor = await ctx.Professores.FirstOrDefaultAsync(p => p.Email == request.Email);
+    if (professor != null && professor.Senha == request.Senha)
+    {
+        return Results.Ok(new { Role = "Professor", Nome = professor.Nome, Id = professor.Id });
+    }
+
+    return Results.NotFound("Usuário ou senha incorretos.");   
 });
 
 app.Run();

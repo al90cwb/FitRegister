@@ -114,6 +114,21 @@ const deleteById = async(id: string): Promise<void | Error> => {
     } 
 };
 
+const login = async (dados: { email: string; senha: string }): Promise<any | Error> => {
+    try {
+        const { data } = await Api.post(`/api/login`, dados);
+
+        if (data) {
+            return data;  // Retorna a resposta com Role, Nome, Id, etc.
+        }
+
+        return new Error("Erro ao realizar login");
+    } catch (error) {
+        console.error(error);
+        return new Error((error as { message: string }).message || "Erro ao realizar login");
+    }
+};
+
 
 export const ProfessoresService = {
     getAll,
@@ -121,4 +136,5 @@ export const ProfessoresService = {
     create,
     updateById,
     deleteById,
+    login
 }

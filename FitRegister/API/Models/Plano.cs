@@ -20,11 +20,4 @@ public class Plano
         CriadoEm = DateTime.Now;
     }
     
-    public Plano(string nomePlano, decimal valor, int parcelas)
-    {
-        NomePlano = nomePlano;
-        Valor = valor;
-        Parcelas = parcelas;
-        CriadoEm = DateTime.Now;
-    }
 }

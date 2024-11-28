@@ -1,5 +1,5 @@
-### Buscar por nome
-GET http://localhost:5253/api/plano/buscar/f8794b29-b2cf-4fda-b1e0-f8b6c435621c
+### Buscar por id
+GET http://localhost:5253/api/plano/buscar/334db27f-d803-4c58-b179-1058069bdfa4
 
 ### Listar todos Planos
 GET http://localhost:5253/api/plano/listar
