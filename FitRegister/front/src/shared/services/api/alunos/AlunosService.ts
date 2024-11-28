@@ -1,5 +1,7 @@
 import { Envioriment } from "../../../environment";
+import { PlanosService } from "../planos/PlanosService";
 import { Api } from "../axios-config";
+import { Login } from "@mui/icons-material";
 
 export interface  IListagemAlunos {
     id?: string; 
@@ -20,6 +22,7 @@ export interface IDetalheAluno {
     telefone: string;
     email: string;
     planoId: string;
+    exercicioId: string;
     professorId?: string;
     treinoId?: string;
     criadoEm?: string; 
@@ -41,7 +44,7 @@ const getAll = async(page= 1 , filter = ''): Promise<TAlunosComTotalCount | Erro
         const {data, headers} = await Api.get(urlRelativa); //limitando total de consultas por pagina 
 
         if (data){
-            
+
             console.log(headers['x-total-count']);
             return{
                 data,
@@ -114,6 +117,20 @@ const deleteById = async(id: string): Promise<void | Error> => {
     } 
 };
 
+const login = async (dados: { email: string; senha: string }): Promise<any | Error> => {
+    try {
+        const { data } = await Api.post(`/api/login`, dados);
+
+        if (data) {
+            return data;
+        }
+
+        return new Error("Erro ao realizar login");
+    } catch (error) {
+        console.error(error);
+        return new Error((error as { message: string }).message || "Erro ao realizar login");
+    }
+};
 
 export const AlunosService = {
     getAll,
@@ -121,4 +138,5 @@ export const AlunosService = {
     create,
     updateById,
     deleteById,
+    login,
 }
