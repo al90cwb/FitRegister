@@ -132,6 +132,16 @@ const login = async (dados: { email: string; senha: string }): Promise<any | Err
     }
 };
 
+const addExercicio = async (alunoId: string, exercicioId: string): Promise<void | Error> => {
+    try {
+        await Api.put(`/api/aluno/add-exercicio/${alunoId}`, exercicioId);
+    } catch (error) {
+        console.error(error);
+        return new Error((error as { message: string }).message || "Erro ao adicionar o exercício");
+    }
+};
+
+
 export const AlunosService = {
     getAll,
     getById,
@@ -139,4 +149,5 @@ export const AlunosService = {
     updateById,
     deleteById,
     login,
+    addExercicio
 }

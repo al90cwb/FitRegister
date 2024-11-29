@@ -1,134 +1,129 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Box, Grid, LinearProgress, Paper, Typography, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
-import { Form } from "@unform/web";
+
+import { useEffect, useRef, useState } from "react";
+import {  useNavigate, useParams } from "react-router-dom";
+import { Box, Grid, LinearProgress, Paper, Typography } from "@mui/material";
+import * as yup from 'yup';
 
 import { FerramentasDeDetalhe } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import { AlunosService, IDetalheAluno } from "../../shared/services/api/alunos/AlunosService";
-import { PlanosService } from "../../shared/services/api/planos/PlanosService";
-import { ExerciciosService } from "../../shared/services/api/exercicios/ExerciciosService";
-import { VTextField, useVForm } from "../../shared/forms";
+import { VTextField , VForm, useVForm} from "../../shared/forms";
+
+
+import React from 'react';
+import { Form } from "@unform/web";
+
+
+
+// const formValidationSchema : yup.SchemaOf <IDetalheAluno> = yup.object().shape({
+//     nome : yup.string().required().min(3),
+//     email : yup.string().required().email(),
+//     planoId : yup.string().required(),
+// });
+
 
 export const DetalheDeAluno: React.FC = () => {
-    const { id = "novo" } = useParams<'id'>();
+
+    const{ id = "novo"} = useParams<'id'>();
     const navigate = useNavigate();
 
-    const { fomrRef, save, saveAndClose, isSaveAndNew, isSaveAnsClose: isSaveAndClose } = useVForm();
+    const {fomrRef, save, saveAndClose, isSaveAndNew,isSaveAnsClose: isSaveAndClose} = useVForm();
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [nome, setIsNome] = useState('');
-    const [planos, setPlanos] = useState<any[]>([]);
-    const [exercicios, setExercicios] = useState<any[]>([]);
+    const  [isLoading,setIsLoading] = useState(false);
+    const  [nome,setIsNome] = useState('');
 
-    useEffect(() => {
-        setIsLoading(true);
-
-        // Carrega planos e exercícios
-        PlanosService.getAll()
-            .then((result) => {
-                if (!(result instanceof Error)) setPlanos(result.data);
-            });
-
-        ExerciciosService.getAll()
-            .then((result) => {
-                if (!(result instanceof Error)) setExercicios(result.data);
-            })
-            .finally(() => setIsLoading(false));
-
-        if (id !== "novo") {
+    
+    useEffect(()=>{
+        if(id !== 'novo'){
             setIsLoading(true);
 
             AlunosService.getById(id)
                 .then((result) => {
                     setIsLoading(false);
-                    if (result instanceof Error) {
-                        alert(result.message);
-                        navigate('/alunos');
-                    } else {
+                    if (result instanceof Error ){
+                       alert(result.message)
+                       navigate('/alunos');
+                    }else{
                         setIsNome(result.nome!);
+                        console.log(result );
                         fomrRef.current?.setData(result);
-                    }
+                    };
                 });
-        } else {
+        }else{
             fomrRef.current?.setData({
-                nome: '',
-                email: '',
+                nome:'',
+                email:'',
                 telefone: '',
-                endereco: '',
+                endereco:'',
                 senha: '',
                 planoId: '',
-                exercicioId: '',
-            });
+            })
         }
-    }, [id]);
 
-    const handleSave = (dados: IDetalheAluno) => {
-        console.log(dados.planoId);
+
+    },[id]);
+
+    const handleSave = (dados : IDetalheAluno) => {
         setIsLoading(true);
 
-        if (!dados.nome || dados.nome.length < 3) {
-            fomrRef.current?.setFieldError('nome', 'O nome precisa ter pelo menos 3 caracteres');
+
+        if (dados.nome.length <3  ) {
+            fomrRef.current?.setFieldError('nome','O campo precisa ser prenchido');
             setIsLoading(false);
-            return;
-        }
-    
-        if (!dados.email || !dados.email.includes('@')) {
-            fomrRef.current?.setFieldError('email', 'E-mail inválido');
-            setIsLoading(false);
-            return;
-        }
-    
-        if (!dados.telefone || dados.telefone.length < 10) {
-            fomrRef.current?.setFieldError('telefone', 'Telefone inválido');
-            setIsLoading(false);
-            return;
+            return
         }
 
-        if (id === 'novo') {
+        if (id == 'novo'){
+
             AlunosService.create(dados)
-                .then((result) => {
-                    setIsLoading(false);
-                    if (result instanceof Error) {
-                        alert(result.message);
-                    } else {
-                        if (isSaveAndClose()) {
-                            navigate('/alunos');
-                        } else {
-                            navigate(`/alunos/detalhe/${result}`);
+                .then((result) =>  {
+                        setIsLoading(false);
+                        if(result instanceof Error){
+                            alert(result.message);
+                        }else{
+                            if(isSaveAndClose()){
+                                navigate('/alunos')
+                            }else{
+                                navigate(`/alunos/detalhe/${result}`);
+                            }
                         }
-                    }
-                });
-        } else {
-            AlunosService.updateById({ ...dados, id })
-                .then((result) => {
+                })
+        
+        }else{
+
+            const updatedData = { ...dados, id };  // Adiciona o id aos dados
+            console.log(updatedData);
+            
+            AlunosService.updateById(updatedData)
+                .then((result) =>  {
                     setIsLoading(false);
-                    if (result instanceof Error) {
-                        alert(result.message);
-                    } else {
-                        if (isSaveAndClose()) {
-                            navigate('/alunos');
+                        if(result instanceof Error){
+                            alert(result.message);
+                        }else{
+                            if(isSaveAndClose()){
+                                navigate('/alunos')
+                            }
                         }
-                    }
-                });
+                })
+
         }
     };
 
-    const handleDelete = (id: string) => {
+    const handleDelete = (id : string  ) => {
         // eslint-disable-next-line no-restricted-globals
-        if (confirm('Realmente deseja apagar?')) {
+        if (confirm( 'Realmente deseja apagar?') ){
             AlunosService.deleteById(id)
-                .then((result) => {
-                    if (result instanceof Error) {
-                        alert(result.message);
-                    } else {
-                        navigate('/alunos');
-                        alert('Registro apagado com sucesso!');
-                    }
-                });
+            .then(result => {
+                if (result instanceof Error){
+                    alert (result.message);
+                }else{
+                    navigate('/alunos');
+                    alert('Registro apagado com sucesso!')
+                }
+            });
         }
-    };
-
+    }
+    
     return(
         <LayoutBaseDePagina 
             titulo={id ==='novo' ? 'Novo Aluno' : nome}
@@ -221,25 +216,17 @@ export const DetalheDeAluno: React.FC = () => {
 
                         <Grid container item direction="row"  spacing={2}>
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                                <FormControl fullWidth disabled={isLoading}>
-                                    <InputLabel id="planoId-label">Plano</InputLabel>
-                                    <Select
-                                        labelId="planoId-label"
-                                        label="Plano"
-                                        name="planoId"
-                                        defaultValue=""
-                                    >
-                                        {planos.map((plano) => (
-                                            <MenuItem key={plano.id} value={plano.id}>
-                                                {plano.nomePlano}
-                                            </MenuItem>
-                                        ))}
-                                        
-                                    </Select>
-                                </FormControl>
+                            <VTextField 
+                                fullWidth
+                                label="Plano" 
+                                name='planoId'
+                                disabled={isLoading}
+                                />
                             </Grid>
                         </Grid>
+
                     </Grid>
+        
                 </Box>
             </Form> 
 

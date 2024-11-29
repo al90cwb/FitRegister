@@ -26,6 +26,7 @@ export const VisualizarAluno: React.FC = () => {
                         navigate('/alunos');
                     } else {
                         setAluno(result);
+    
                         PlanosService.getById(result.planoId)
                             .then((result) => {
                                 if (result instanceof Error) {
@@ -35,20 +36,23 @@ export const VisualizarAluno: React.FC = () => {
                                     setPlano(result);
                                 }
                             });
-
-                        ExerciciosService.getById(result.exercicioId)
-                            .then((result) => {
-                                if (result instanceof Error) {
-                                    alert(result.message);
-                                    navigate('/alunos');
-                                } else {
-                                    setExercicio(result);
-                                }
-                            });
+    
+                        if (result.exercicioId) {
+                            ExerciciosService.getById(result.exercicioId)
+                                .then((result) => {
+                                    if (result instanceof Error) {
+                                        alert(result.message);
+                                        navigate('/alunos');
+                                    } else {
+                                        setExercicio(result);
+                                    }
+                                });
+                        }
                     }
                 });
         }
     }, [id]);
+    
 
     if (isLoading) {
         return <LinearProgress variant="indeterminate" />;

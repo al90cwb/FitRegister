@@ -7,6 +7,7 @@ export interface  IListagemProfessores {
     endereco?: string;
     telefone?: string;
     email?: string;
+    exercicioId?: string;
     planoId?: string;
     professorId?: string;
     treinoId?: string;
@@ -19,6 +20,7 @@ export interface IDetalheProfessores {
     endereco: string;
     telefone: string;
     email: string;
+    exercicioId: string;
     planoId: string;
     professorId?: string;
     treinoId?: string;

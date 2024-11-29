@@ -8,8 +8,7 @@ Content-Type: application/json
         "telefone": "41 994567123",
         "email": "patricia.lima@gmail.com",
         "senha": "patricia456!",
-        "planoId": "334db27f-d803-4c58-b179-1058069bdfa4",
-        "exercicioId" : "d0d2514b-d593-4715-a45b-33d748326e1f"
+        "planoId": "334db27f-d803-4c58-b179-1058069bdfa4"
     }
     
 ### Atualizar Aluno por Id
@@ -26,7 +25,7 @@ Content-Type: application/json
 }
 
 ### Buscar Aluno por ID
-GET http://localhost:5253/api/aluno/buscar/5077cdbc-355c-4758-a0ac-4aad7941bfbf
+GET http://localhost:5253/api/aluno/buscar/1055c99a-6bdd-4c13-b6a4-da4ebcc48b39
 
 ### Listar todos alunos
 GET http://localhost:5253/api/aluno/listar
