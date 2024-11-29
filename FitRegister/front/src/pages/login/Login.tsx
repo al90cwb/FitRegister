@@ -16,6 +16,9 @@ export const Login: React.FC = () => {
         AlunosService.login({ email, senha }).then((result) => {
             console.log(result); 
             if (!(result instanceof Error)) {
+                localStorage.setItem("isAuthenticated", "true");
+                localStorage.setItem("userRole", result.role); // Salva o papel do usuário
+                console.log(localStorage.getItem("isAuthenticated"));
                 if (result.role === "Aluno") {
                     navigate(`/alunos/visualizar/${result .id!}`);
                 } else if (result.role === "Professor") {

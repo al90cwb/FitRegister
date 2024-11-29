@@ -8,7 +8,7 @@ import { PlanosService } from "../../shared/services/api/planos/PlanosService";
 import { ExerciciosService } from "../../shared/services/api/exercicios/ExerciciosService";
 
 export const VisualizarAluno: React.FC = () => {
-    const { id } = useParams<'id'>();
+    const { id } = useParams();
     const navigate = useNavigate();
     const [plano, setPlano] = useState<any | null>(null);
     const [isLoading, setIsLoading] = useState(false);
