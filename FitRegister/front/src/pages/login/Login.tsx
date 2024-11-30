@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, TextField, Typography, Paper } from "@mui/material";
+import { Box, Button, TextField, Typography, Paper, Avatar } from "@mui/material";
 import { AlunosService } from "../../shared/services/api/alunos/AlunosService";
+import { logo192 } from "../../shared/images"; 
 
 export const Login: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -42,7 +43,10 @@ export const Login: React.FC = () => {
             height="100vh"
         >
             <Paper elevation={3} style={{ padding: "20px", maxWidth: "400px" }}>
-                <Typography variant="h5" marginBottom={2}>
+                <Box display="flex" justifyContent="center" marginBottom={2}>
+                    <Avatar alt="Logo" src={logo192} sx={{ width: 300, height: 200 }} />
+                </Box>
+                <Typography variant="h5" marginBottom={2}  >
                     Login
                 </Typography>
                 <TextField

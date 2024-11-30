@@ -1,6 +1,7 @@
 import { Avatar, Box, Divider, Drawer ,Icon,List,ListItemButton,ListItemIcon,ListItemText,useMediaQuery,useTheme } from "@mui/material";
 import { useAppThemeContext, useDrawerContext } from "../../context";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
+import { logo192, logo512 } from "../../images";
 
 
 
@@ -63,7 +64,7 @@ export const MenuLateral : React.FC<IappMenuLateralProvideProps> = ({children}) 
                     <Box width="100%" height={theme.spacing(20)} display="flex" alignItems="center" justifyContent="center">
                         <Avatar
                             sx={{height: theme.spacing(12), width:  theme.spacing(12) }}
-                            // src={"Coloca inmagem aqui"}  não consegui
+                            src={logo192}
                             />
                     </Box>
 
