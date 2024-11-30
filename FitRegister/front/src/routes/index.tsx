@@ -21,28 +21,25 @@ export const AppRoutes = () => {
     const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
     const userRole = localStorage.getItem("userRole");
 
-    // Fazendo o controle da navegação e do drawer
     useEffect(() => {
         if (isAuthenticated) {
             if (userRole === "Professor") {
                 setDrawerOptions([
-                    { icon: "people", label: "Minha Conta", path: "/professores/visualizar" },
-                    { icon: "home", label: "Pagina Inicial", path: "/pagina-inicial" },
+                    { icon: "home", label: "Página Inicial", path: "/pagina-inicial" },
                     { icon: "people", label: "Alunos", path: "/alunos" },
-                    { icon: "fitness_center", label: "Exercicios", path: "/exercicios" },
+                    { icon: "fitness_center", label: "Exercícios", path: "/exercicios" },
                     { icon: "folder", label: "Planos", path: "/planos" },
                     { icon: "people", label: "Professores", path: "/professores" },
                 ]);
             } else if (userRole === "Aluno") {
                 setDrawerOptions([
-                    { icon: "home", label: "Minha Conta", path: "/alunos/visualizar" },
-                    { icon: "people", label: "Pagina Inicial", path: "/pagina-inicial" },
+                    { icon: "people", label: "Minha Conta", path: "/alunos/visualizar" },
                 ]);
             }
         } else {
             setDrawerOptions([]);
         }
-    }, [isAuthenticated, userRole]);
+    }, [isAuthenticated, userRole, setDrawerOptions]);
 
     return (
         <Routes>

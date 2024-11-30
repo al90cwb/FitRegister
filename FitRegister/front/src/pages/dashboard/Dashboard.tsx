@@ -1,5 +1,3 @@
-import {FerramentasDeDetalhe } from "../../shared/components";
-import { LayoutBaseDePagina } from "../../shared/layouts";
 import { useEffect, useState } from "react";
 import { Box, Card, CardContent, Typography, Grid } from "@mui/material";
 

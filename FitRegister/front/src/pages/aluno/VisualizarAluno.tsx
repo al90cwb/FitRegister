@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Grid, LinearProgress, Paper, Typography, Card, CardContent, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, LinearProgress, Paper, Typography, Card, CardContent, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { FerramentasDeDetalhe } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import { AlunosService } from "../../shared/services/api/alunos/AlunosService";
@@ -14,6 +14,7 @@ export const VisualizarAluno: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [aluno, setAluno] = useState<any | null>(null);
     const [exercicio, setExercicio] = useState<any | null>(null);
+    const userRole = localStorage.getItem("userRole");
 
     useEffect(() => {
         if (id) {
@@ -52,7 +53,8 @@ export const VisualizarAluno: React.FC = () => {
                 });
         }
     }, [id]);
-    
+
+  
 
     if (isLoading) {
         return <LinearProgress variant="indeterminate" />;
@@ -63,14 +65,11 @@ export const VisualizarAluno: React.FC = () => {
     }
 
     return (
-        <LayoutBaseDePagina
-            titulo={`Aluno: ${aluno.nome}`}
-            barraDeFerramentas={
-                <FerramentasDeDetalhe
-                    aoClicarEmVoltar={() => navigate('/alunos')}
-                />
-            }
-        >
+        <LayoutBaseDePagina  titulo={`Aluno: ${aluno.nome}`} >
+             {userRole === "Professor" && (
+                <FerramentasDeDetalhe aoClicarEmVoltar={() => navigate('/alunos')} />
+            )}
+
             <Box margin={2}>
                 <Typography variant="h4" gutterBottom>Informações do Aluno</Typography>
 

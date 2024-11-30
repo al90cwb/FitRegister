@@ -18,7 +18,6 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({to, icon,label, onClick }) 
     const match = useMatch({path : resolvedPath.pathname, end : false})//verifica se nossa opção de menu esta selecionada ou não, se diferente de nulo esta na rota certa
 
 
-
     const handleClick = () => {
         navigate(to);
         onClick?.() ;
@@ -44,6 +43,16 @@ export const MenuLateral : React.FC<IappMenuLateralProvideProps> = ({children}) 
     
     const { isDrawerOpen,toggleDrawerOpen,drawerOptions} = useDrawerContext();
     const { toggleTheme } = useAppThemeContext();
+
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("isAuthenticated");
+        localStorage.removeItem("userRole");
+        navigate("/login"); // Redireciona para a tela de login
+        window.location.reload(); // Atualiza o estado no App
+    };
 
 
     return(
@@ -76,6 +85,18 @@ export const MenuLateral : React.FC<IappMenuLateralProvideProps> = ({children}) 
 
                         </List>
                     </Box>
+
+                    <Box>
+                        <List component="nav">
+                            <ListItemButton onClick={handleLogout}>
+                                <ListItemIcon>
+                                    <Icon>logout</Icon>
+                                </ListItemIcon>
+                                <ListItemText primary="Logout" />
+                            </ListItemButton>
+                        </List>
+                    </Box>
+
                     <Box>
                         <List component="nav">
 
@@ -88,6 +109,8 @@ export const MenuLateral : React.FC<IappMenuLateralProvideProps> = ({children}) 
 
                         </List>
                     </Box>
+
+
                 </Box>
             </Drawer>
 

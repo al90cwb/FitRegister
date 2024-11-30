@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
 import { AlunosService } from "../../shared/services/api/alunos/AlunosService";
-import { ProfessoresService } from "../../shared/services/api/professores/ProfessoresService";
 
 export const Login: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -12,23 +11,28 @@ export const Login: React.FC = () => {
 
     const handleLogin = () => {
         setErro("");
-    
+        
         AlunosService.login({ email, senha }).then((result) => {
-            console.log(result); 
             if (!(result instanceof Error)) {
                 localStorage.setItem("isAuthenticated", "true");
-                localStorage.setItem("userRole", result.role); // Salva o papel do usuário
-                console.log(localStorage.getItem("isAuthenticated"));
+                localStorage.setItem("userRole", result.role);
+    
                 if (result.role === "Aluno") {
-                    navigate(`/alunos/visualizar/${result .id!}`);
+                    navigate(`/alunos/visualizar/${result.id}`);
                 } else if (result.role === "Professor") {
                     navigate(`/professores/visualizar/${result.id}`);  
                 }
+                // Força atualização do estado no componente App
+                window.location.reload(); 
             } else {
                 setErro("Login inválido! Verifique suas credenciais.");
             }
+    
+            setSenha("");
+            setEmail("");
         });
     };
+    
 
     return (
         <Box
@@ -62,13 +66,17 @@ export const Login: React.FC = () => {
                     </Typography>
                 )}
                 <Box marginTop={2} display="flex" justifyContent="flex-end">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleLogin}
-                    >
-                        Entrar
-                    </Button>
+                    
+                    <Box  margin={1}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleLogin}
+                        >
+                            Entrar
+                        </Button>
+                    </Box>
+
                 </Box>
             </Paper>
         </Box>

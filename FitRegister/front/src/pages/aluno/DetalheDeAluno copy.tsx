@@ -14,14 +14,6 @@ import React from 'react';
 import { Form } from "@unform/web";
 
 
-
-// const formValidationSchema : yup.SchemaOf <IDetalheAluno> = yup.object().shape({
-//     nome : yup.string().required().min(3),
-//     email : yup.string().required().email(),
-//     planoId : yup.string().required(),
-// });
-
-
 export const DetalheDeAluno: React.FC = () => {
 
     const{ id = "novo"} = useParams<'id'>();
