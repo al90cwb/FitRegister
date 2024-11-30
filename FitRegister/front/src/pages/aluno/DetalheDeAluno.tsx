@@ -7,14 +7,14 @@ import { FerramentasDeDetalhe } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import { AlunosService, IDetalheAluno } from "../../shared/services/api/alunos/AlunosService";
 import { PlanosService } from "../../shared/services/api/planos/PlanosService";
-import { ExerciciosService } from "../../shared/services/api/exercicios/ExerciciosService";
+import { ExerciciosService } from "../../shared/services/api/treinos/TreinosService";
 import { VTextField, useVForm } from "../../shared/forms";
 
 export const DetalheDeAluno: React.FC = () => {
     const { id = "novo" } = useParams<'id'>();
     const navigate = useNavigate();
 
-    const { fomrRef, save, saveAndClose, isSaveAndNew, isSaveAnsClose: isSaveAndClose } = useVForm();
+    const { fomrRef, save, isSaveAndNew, isSaveAnsClose: isSaveAndClose } = useVForm();
 
     const [isLoading, setIsLoading] = useState(false);
     const [nome, setIsNome] = useState('');
@@ -99,6 +99,7 @@ export const DetalheDeAluno: React.FC = () => {
                         }
                     }
                 });
+                
         } else {
             AlunosService.updateById({ ...dados, id })
                 .then((result) => {
@@ -134,12 +135,10 @@ export const DetalheDeAluno: React.FC = () => {
             titulo={id ==='novo' ? 'Novo Aluno' : nome}
             barraDeFerramentas={
                 <FerramentasDeDetalhe
-                    mostarBotaoSalvarEFechar
                     mostarBotaoNovo={id !== 'novo'}
                     mostarBotaoApagar={id !== 'novo'}
 
                     aoClicarEmSalvar={save}
-                    aoClicarEmSalvarEFechar={saveAndClose}
                     aoClicarEmApagar={() =>handleDelete(id)}
                     aoClicarEmNovo={() => navigate('/alunos/detalhe/novo')}
                     aoClicarEmVoltar={() => navigate('/alunos')}

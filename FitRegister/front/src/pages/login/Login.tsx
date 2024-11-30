@@ -33,7 +33,12 @@ export const Login: React.FC = () => {
             setEmail("");
         });
     };
-    
+
+    const handleCadastrarClick = () => {
+        navigate('/cadastrar'); // Altere para o caminho correto do cadastro
+    };
+
+
 
     return (
         <Box
@@ -78,6 +83,16 @@ export const Login: React.FC = () => {
                             onClick={handleLogin}
                         >
                             Entrar
+                        </Button>
+                    </Box>
+
+                    <Box  margin={1}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleCadastrarClick}
+                        >
+                            Cadastrar
                         </Button>
                     </Box>
 

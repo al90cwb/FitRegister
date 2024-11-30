@@ -128,15 +128,13 @@ export const DetalheDeProfessor: React.FC = () => {
             titulo={id ==='novo' ? 'Novo Professor' : nome}
             barraDeFerramentas={
                 <FerramentasDeDetalhe
-                    mostarBotaoSalvarEFechar
                     mostarBotaoNovo={id !== 'novo'}
                     mostarBotaoApagar={id !== 'novo'}
 
                     aoClicarEmSalvar={save}
-                    aoClicarEmSalvarEFechar={saveAndClose}
                     aoClicarEmApagar={() =>handleDelete(id)}
                     aoClicarEmNovo={() => navigate('/professors/detalhe/novo')}
-                    aoClicarEmVoltar={() => navigate('/professors')}
+                    aoClicarEmVoltar={() => navigate('/professores')}
 
                 />
             }

@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import { FerramentasDaListagem } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
 import { useEffect, useMemo, useState } from "react";
-import { ExerciciosService, IListagemExercicios  } from "../../shared/services/api/exercicios/ExerciciosService";
+import { ExerciciosService, IListagemExercicios  } from "../../shared/services/api/treinos/TreinosService";
 import { useDebounce } from "../../shared/hooks";
 import { Icon, IconButton, LinearProgress, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from "@mui/material";
 import { Envioriment } from "../../shared/environment";
@@ -72,7 +72,7 @@ export const ListagemExercicios : React.FC = () => {
 
     return(
         <LayoutBaseDePagina 
-        titulo='Lista de Exercicios'
+        titulo='Lista de Treinos'
         barraDeFerramentas={
             <FerramentasDaListagem
                 mostrarInputBusca
@@ -91,11 +91,9 @@ export const ListagemExercicios : React.FC = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>Ações</TableCell>
-                            <TableCell>Nome do Exercicio</TableCell>
-                            <TableCell>Descrição do Exercicio</TableCell>
+                            <TableCell>Nome do Treino</TableCell>
+                            <TableCell>Descrição do Decrição do Treino</TableCell>
                             <TableCell>Grupo Musuclar</TableCell>
-                            <TableCell>Repetições</TableCell>
-                            <TableCell>Tempo para descanso</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -115,8 +113,6 @@ export const ListagemExercicios : React.FC = () => {
                             <TableCell>{row.nome}</TableCell>
                             <TableCell>{row.descricao}</TableCell>
                             <TableCell>{row.grupoMuscular}</TableCell>
-                            <TableCell>{row.repeticoes}</TableCell>
-                            <TableCell>{row.tempoDescanso}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

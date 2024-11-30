@@ -5,12 +5,13 @@ import {
     ListagemAlunos,
     DetalheDeAluno,
     DetalheDePlano,
-    ListagemPlanos
+    ListagemPlanos,
+    Cadastrar
 } from "../pages";
 import { ListagemProfessores } from "../pages/professor/ListagemProfessores";
 import { DetalheDeProfessor } from "../pages/professor/DetalheDeProfessor";
-import { DetalheDeExercicio } from "../pages/exercicio/DetalheDeExercicio";
-import { ListagemExercicios } from "../pages/exercicio/ListagemDeExercicio";
+import { DetalheDeExercicio } from "../pages/treinos/DetalheDeTreino";
+import { ListagemExercicios } from "../pages/treinos/ListagemDeTreino";
 import { VisualizarAluno } from "../pages/aluno/VisualizarAluno";
 import { Login } from "../pages/login/Login";
 import { VisualizarProfessor } from "../pages/professor/VisualizarProfessor";
@@ -27,13 +28,9 @@ export const AppRoutes = () => {
                 setDrawerOptions([
                     { icon: "home", label: "Página Inicial", path: "/pagina-inicial" },
                     { icon: "people", label: "Alunos", path: "/alunos" },
-                    { icon: "fitness_center", label: "Exercícios", path: "/exercicios" },
+                    { icon: "fitness_center", label: "Treinos", path: "/exercicios" },
                     { icon: "folder", label: "Planos", path: "/planos" },
                     { icon: "people", label: "Professores", path: "/professores" },
-                ]);
-            } else if (userRole === "Aluno") {
-                setDrawerOptions([
-                    { icon: "people", label: "Minha Conta", path: "/alunos/visualizar" },
                 ]);
             }
         } else {
@@ -44,7 +41,7 @@ export const AppRoutes = () => {
     return (
         <Routes>
             {/* Redirecionamento baseado na autenticação */}
-            <Route path="/" element={isAuthenticated ? <Navigate to="/pagina-inicial" /> : <Navigate to="/login" />} />
+            <Route path="/" element={isAuthenticated ? <Navigate to="/pagina-inicial" /> : <Navigate to="/pagina-inicial" />} />
 
             {/* Rota de login */}
             <Route path="/login" element={<Login />} />
@@ -61,7 +58,8 @@ export const AppRoutes = () => {
             <Route path="/professores" element={isAuthenticated ? <ListagemProfessores /> : <Navigate to="/login" />} />
             <Route path="/professores/visualizar/:id" element={isAuthenticated ? <VisualizarProfessor /> : <Navigate to="/login" />} />
             <Route path="/professores/detalhe/:id" element={isAuthenticated ? <DetalheDeProfessor /> : <Navigate to="/login" />} />
-
+            <Route path="/cadastrar" element={<Cadastrar />} />
+   
             {/* Redirecionamento para login caso a rota seja inválida */}
             <Route path="*" element={<Navigate to="/login" />} />
         </Routes>

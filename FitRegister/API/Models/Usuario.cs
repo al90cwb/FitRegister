@@ -8,7 +8,6 @@ public abstract class Usuario
     public Guid Id { get; set; }
     [Required(ErrorMessage = "O Nome do usuário é obrigatório.")]
     public string?  Nome { get; set; }
-    [Required(ErrorMessage = "O Endereço do usuário é obrigatório.")]
     public string? Endereco { get; set; }
     [Required(ErrorMessage = "O Telefone do usuário é obrigatório.")]
     public string? Telefone { get; set; }

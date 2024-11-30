@@ -127,12 +127,10 @@ export const DetalheDePlano: React.FC = () => {
             titulo={id ==='novo' ? 'Novo Plano' : nome}
             barraDeFerramentas={
                 <FerramentasDeDetalhe
-                    mostarBotaoSalvarEFechar
                     mostarBotaoNovo={id !== 'novo'}
                     mostarBotaoApagar={id !== 'novo'}
 
                     aoClicarEmSalvar={save}
-                    aoClicarEmSalvarEFechar={saveAndClose}
                     aoClicarEmApagar={() =>handleDelete(id)}
                     aoClicarEmNovo={() => navigate('/planos/detalhe/novo')}
                     aoClicarEmVoltar={() => navigate('/planos')}

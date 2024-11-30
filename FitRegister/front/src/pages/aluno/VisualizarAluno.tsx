@@ -5,7 +5,7 @@ import { FerramentasDeDetalhe } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import { AlunosService } from "../../shared/services/api/alunos/AlunosService";
 import { PlanosService } from "../../shared/services/api/planos/PlanosService";
-import { ExerciciosService } from "../../shared/services/api/exercicios/ExerciciosService";
+import { ExerciciosService } from "../../shared/services/api/treinos/TreinosService";
 
 export const VisualizarAluno: React.FC = () => {
     const { id } = useParams();
@@ -28,7 +28,8 @@ export const VisualizarAluno: React.FC = () => {
                     } else {
                         setAluno(result);
     
-                        PlanosService.getById(result.planoId)
+                        if (result.planoId){
+                            PlanosService.getById(result.planoId)
                             .then((result) => {
                                 if (result instanceof Error) {
                                     alert(result.message);
@@ -37,6 +38,8 @@ export const VisualizarAluno: React.FC = () => {
                                     setPlano(result);
                                 }
                             });
+                        }
+                       
     
                         if (result.exercicioId) {
                             ExerciciosService.getById(result.exercicioId)
@@ -107,6 +110,9 @@ export const VisualizarAluno: React.FC = () => {
                         </TableContainer>
                     </CardContent>
                 </Card>
+
+
+                
 
                 {/* Plano do Aluno */}
                 {plano && (

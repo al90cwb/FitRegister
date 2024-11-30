@@ -4,3 +4,4 @@ export * from './aluno/DetalheDeAluno';
 export * from './plano/ListagemDePlanos';
 export * from './plano/DetalheDePlano';
 export * from './login/Login';
+export * from './login/Cadastrar';

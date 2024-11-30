@@ -3,12 +3,10 @@ POST  http://localhost:5253/api/aluno/cadastrar
 Content-Type: application/json
 
    {
-        "nome": "Patrícia Lima",
-        "endereco": "Avenida Central, 101",
+        "nome": "Teste ",
         "telefone": "41 994567123",
-        "email": "patricia.lima@gmail.com",
-        "senha": "patricia456!",
-        "planoId": "334db27f-d803-4c58-b179-1058069bdfa4"
+        "email": "teste@gmail.com",
+        "senha": "teste123"
     }
     
 ### Atualizar Aluno por Id
@@ -31,7 +29,7 @@ GET http://localhost:5253/api/aluno/buscar/1055c99a-6bdd-4c13-b6a4-da4ebcc48b39
 GET http://localhost:5253/api/aluno/listar
 
 ### Deletar por Id
-DELETE http://localhost:5253/api/aluno/deletar/f25bf218-c98c-47ac-805d-117259216239
+DELETE http://localhost:5253/api/aluno/deletar/f2c6adfb-bbff-4f49-898b-608b2aeb9a37
 
 ###
 PUT  http://localhost:5253/api/aluno/add-exercicio/5077cdbc-355c-4758-a0ac-4aad7941bfbf

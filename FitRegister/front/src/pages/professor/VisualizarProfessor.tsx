@@ -4,7 +4,7 @@ import { Box, Card, CardContent, Grid, LinearProgress, Paper, Table, TableBody, 
 import { FerramentasDeDetalhe } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import { ProfessoresService } from "../../shared/services/api/professores/ProfessoresService";
-import { ExerciciosService } from "../../shared/services/api/exercicios/ExerciciosService";
+import { ExerciciosService } from "../../shared/services/api/treinos/TreinosService";
 
 export const VisualizarProfessor: React.FC = () => {
     const { id } = useParams<'id'>();
