@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Grid, LinearProgress, Paper, Typography, Card, CardContent, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, LinearProgress, Paper, Typography, Card, CardContent, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { FerramentasDeDetalhe } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import { AlunosService } from "../../shared/services/api/alunos/AlunosService";
 import { PlanosService } from "../../shared/services/api/planos/PlanosService";
-import { ExerciciosService } from "../../shared/services/api/exercicios/ExerciciosService";
+import { ExerciciosService } from "../../shared/services/api/treinos/TreinosService";
 
 export const VisualizarAluno: React.FC = () => {
-    const { id } = useParams<'id'>();
+    const { id } = useParams();
     const navigate = useNavigate();
     const [plano, setPlano] = useState<any | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [aluno, setAluno] = useState<any | null>(null);
     const [exercicio, setExercicio] = useState<any | null>(null);
+    const userRole = localStorage.getItem("userRole");
 
     useEffect(() => {
         if (id) {
@@ -26,7 +27,9 @@ export const VisualizarAluno: React.FC = () => {
                         navigate('/alunos');
                     } else {
                         setAluno(result);
-                        PlanosService.getById(result.planoId)
+    
+                        if (result.planoId){
+                            PlanosService.getById(result.planoId)
                             .then((result) => {
                                 if (result instanceof Error) {
                                     alert(result.message);
@@ -35,20 +38,26 @@ export const VisualizarAluno: React.FC = () => {
                                     setPlano(result);
                                 }
                             });
-
-                        ExerciciosService.getById(result.exercicioId)
-                            .then((result) => {
-                                if (result instanceof Error) {
-                                    alert(result.message);
-                                    navigate('/alunos');
-                                } else {
-                                    setExercicio(result);
-                                }
-                            });
+                        }
+                       
+    
+                        if (result.exercicioId) {
+                            ExerciciosService.getById(result.exercicioId)
+                                .then((result) => {
+                                    if (result instanceof Error) {
+                                        alert(result.message);
+                                        navigate('/alunos');
+                                    } else {
+                                        setExercicio(result);
+                                    }
+                                });
+                        }
                     }
                 });
         }
     }, [id]);
+
+  
 
     if (isLoading) {
         return <LinearProgress variant="indeterminate" />;
@@ -59,14 +68,15 @@ export const VisualizarAluno: React.FC = () => {
     }
 
     return (
-        <LayoutBaseDePagina
-            titulo={`Aluno: ${aluno.nome}`}
-            barraDeFerramentas={
+        <LayoutBaseDePagina  titulo={`Aluno: ${aluno.nome}`} >
+             {userRole === "Professor" && (
                 <FerramentasDeDetalhe
-                    aoClicarEmVoltar={() => navigate('/alunos')}
-                />
-            }
-        >
+                mostarBotaoSalvar = {false}
+                mostarBotaoNovo = {false}
+                mostarBotaoApagar = {false}
+                aoClicarEmVoltar={() => navigate('/alunos')} />
+            )}
+
             <Box margin={2}>
                 <Typography variant="h4" gutterBottom>Informações do Aluno</Typography>
 
@@ -105,6 +115,9 @@ export const VisualizarAluno: React.FC = () => {
                     </CardContent>
                 </Card>
 
+
+                
+
                 {/* Plano do Aluno */}
                 {plano && (
                     <Card variant="outlined" sx={{ marginBottom: 3, border: "2px solid #4caf50" }}>
@@ -119,10 +132,6 @@ export const VisualizarAluno: React.FC = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        <TableRow>
-                                            <TableCell><strong>Plano ID:</strong></TableCell>
-                                            <TableCell>{aluno.planoId}</TableCell>
-                                        </TableRow>
                                         <TableRow>
                                             <TableCell><strong>Nome do Plano:</strong></TableCell>
                                             <TableCell>{plano.nomePlano}</TableCell>
@@ -157,28 +166,16 @@ export const VisualizarAluno: React.FC = () => {
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell><strong>Exercício ID:</strong></TableCell>
-                                            <TableCell>{aluno.exercicioId}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
                                             <TableCell><strong>Nome do Exercício:</strong></TableCell>
                                             <TableCell>{exercicio.nome}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell><strong>Descrição:</strong></TableCell>
-                                            <TableCell>{exercicio.descricao}</TableCell>
+                                            <TableCell style={{ whiteSpace: 'pre-line' }}>{exercicio.descricao}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell><strong>Grupo Muscular:</strong></TableCell>
                                             <TableCell>{exercicio.grupoMuscular}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell><strong>Repetições:</strong></TableCell>
-                                            <TableCell>{exercicio.repeticoes}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell><strong>Tempo de Descanso:</strong></TableCell>
-                                            <TableCell>{exercicio.tempoDescanco}</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>

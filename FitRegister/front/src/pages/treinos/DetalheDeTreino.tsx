@@ -2,11 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import {  useNavigate, useParams } from "react-router-dom";
 import { Box, Grid, LinearProgress, Paper, Typography } from "@mui/material";
-import * as yup from 'yup';
 
 import { FerramentasDeDetalhe } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
-import { ExerciciosService, IDetalheExercicio } from "../../shared/services/api/exercicios/ExerciciosService";
+import { ExerciciosService, IDetalheExercicio } from "../../shared/services/api/treinos/TreinosService";
 import { VTextField , VForm, useVForm} from "../../shared/forms";
 
 
@@ -15,19 +14,12 @@ import { Form } from "@unform/web";
 
 
 
-// const formValidationSchema : yup.SchemaOf <IDetalheExercicio> = yup.object().shape({
-//     nome : yup.string().required().min(3),
-//     email : yup.string().required().email(),
-//     exercicioId : yup.string().required(),
-// });
-
-
 export const DetalheDeExercicio: React.FC = () => {
 
     const{ id = "novo"} = useParams<'id'>();
     const navigate = useNavigate();
 
-    const {fomrRef, save, saveAndClose, isSaveAndNew,isSaveAnsClose: isSaveAndClose} = useVForm();
+    const {fomrRef, save,isSaveAnsClose: isSaveAndClose} = useVForm();
 
     const  [isLoading,setIsLoading] = useState(false);
     const  [nome,setIsNome] = useState('');
@@ -126,15 +118,12 @@ export const DetalheDeExercicio: React.FC = () => {
     
     return(
         <LayoutBaseDePagina 
-            titulo={id ==='novo' ? 'Novo Exercicio' : nome}
+            titulo={id ==='novo' ? 'Novo Treino' : nome}
             barraDeFerramentas={
                 <FerramentasDeDetalhe
-                    mostarBotaoSalvarEFechar
                     mostarBotaoNovo={id !== 'novo'}
                     mostarBotaoApagar={id !== 'novo'}
-
                     aoClicarEmSalvar={save}
-                    aoClicarEmSalvarEFechar={saveAndClose}
                     aoClicarEmApagar={() =>handleDelete(id)}
                     aoClicarEmNovo={() => navigate('/exercicios/detalhe/novo')}
                     aoClicarEmVoltar={() => navigate('/exercicios')}
@@ -160,10 +149,10 @@ export const DetalheDeExercicio: React.FC = () => {
                         </Grid>
 
                         <Grid container item direction="row"  spacing={2}>
-                            <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <VTextField 
                                 fullWidth
-                                label="Nome do Exercicio"
+                                label="Nome do Treino"
                                 name='nome'
                                 disabled={isLoading}
                                 onChange={e => setIsNome(e.target.value)}
@@ -172,19 +161,7 @@ export const DetalheDeExercicio: React.FC = () => {
                         </Grid>
 
                         <Grid container item direction="row"  spacing={2}>
-                            <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                            <VTextField 
-                                fullWidth
-                                label="Descrição do Exercicio"
-                                name='descricao'
-                                disabled={isLoading}
-                                onChange={e => setIsNome(e.target.value)}
-                            />
-                            </Grid>
-                        </Grid>
-
-                        <Grid container item direction="row"  spacing={2}>
-                            <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <VTextField 
                                 fullWidth
                                 label="Grupo muscular"
@@ -196,26 +173,19 @@ export const DetalheDeExercicio: React.FC = () => {
                         </Grid>
 
                         <Grid container item direction="row"  spacing={2}>
-                            <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                                <VTextField 
-                                fullWidth
-                                label="Repetições" 
-                                name='repeticoes'
-                                disabled={isLoading}
-                            />
-                            </Grid>
-                        </Grid>
-                
-                        <Grid container item direction="row"  spacing={2}>
-                            <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <VTextField 
                                 fullWidth
-                                label="Tempo para descanso" 
-                                name='tempoDescanso'
+                                label="Descrição do Treino"
+                                name='descricao'
                                 disabled={isLoading}
+                                onChange={e => setIsNome(e.target.value)}
+                                multiline
+                                rows={5} 
                             />
                             </Grid>
                         </Grid>
+
 
                     </Grid>
         

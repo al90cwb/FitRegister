@@ -1,7 +1,5 @@
 import { Envioriment } from "../../../environment";
-import { PlanosService } from "../planos/PlanosService";
 import { Api } from "../axios-config";
-import { Login } from "@mui/icons-material";
 
 export interface  IListagemAlunos {
     id?: string; 
@@ -11,14 +9,14 @@ export interface  IListagemAlunos {
     email?: string;
     planoId?: string;
     professorId?: string;
-    treinoId?: string;
+    exercicioId?: string;
     criadoEm?: string; 
 }
 
 export interface IDetalheAluno {
     id: string; 
     nome: string;
-    endereco: string;
+    endereco?: string;
     telefone: string;
     email: string;
     planoId: string;
@@ -26,6 +24,7 @@ export interface IDetalheAluno {
     professorId?: string;
     treinoId?: string;
     criadoEm?: string; 
+    senha?: string;
 }
 
 type TAlunosComTotalCount ={
@@ -81,7 +80,7 @@ const getById = async(id: string): Promise<IDetalheAluno | Error > => {
     }
 };
 
-const create = async(dados: Omit<IDetalheAluno, 'id'>): Promise<string | Error > => {
+const create = async(dados: Omit<IDetalheAluno, 'id' | 'planoId' | 'exercicioId' >): Promise<string | Error > => {
     try {
 
 
@@ -132,6 +131,16 @@ const login = async (dados: { email: string; senha: string }): Promise<any | Err
     }
 };
 
+const addExercicio = async (alunoId: string, exercicioId: string): Promise<void | Error> => {
+    try {
+        await Api.put(`/api/aluno/add-exercicio/${alunoId}`, exercicioId);
+    } catch (error) {
+        console.error(error);
+        return new Error((error as { message: string }).message || "Erro ao adicionar o exercício");
+    }
+};
+
+
 export const AlunosService = {
     getAll,
     getById,
@@ -139,4 +148,5 @@ export const AlunosService = {
     updateById,
     deleteById,
     login,
+    addExercicio
 }

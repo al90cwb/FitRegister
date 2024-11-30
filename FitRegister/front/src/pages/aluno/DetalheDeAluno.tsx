@@ -1,140 +1,158 @@
-
-import { useEffect, useRef, useState } from "react";
-import {  useNavigate, useParams } from "react-router-dom";
-import { Box, Grid, LinearProgress, Paper, Typography } from "@mui/material";
-import * as yup from 'yup';
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Box, Grid, LinearProgress, Paper, Typography, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import { Form } from "@unform/web";
 
 import { FerramentasDeDetalhe } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import { AlunosService, IDetalheAluno } from "../../shared/services/api/alunos/AlunosService";
-import { VTextField , VForm, useVForm} from "../../shared/forms";
-
-
-import React from 'react';
-import { Form } from "@unform/web";
-
-
-
-// const formValidationSchema : yup.SchemaOf <IDetalheAluno> = yup.object().shape({
-//     nome : yup.string().required().min(3),
-//     email : yup.string().required().email(),
-//     planoId : yup.string().required(),
-// });
-
+import { PlanosService } from "../../shared/services/api/planos/PlanosService";
+import { ExerciciosService } from "../../shared/services/api/treinos/TreinosService";
+import { VTextField, useVForm } from "../../shared/forms";
 
 export const DetalheDeAluno: React.FC = () => {
-
-    const{ id = "novo"} = useParams<'id'>();
+    const { id = "novo" } = useParams<'id'>();
     const navigate = useNavigate();
 
-    const {fomrRef, save, saveAndClose, isSaveAndNew,isSaveAnsClose: isSaveAndClose} = useVForm();
+    const { fomrRef, save, isSaveAndNew, isSaveAnsClose: isSaveAndClose } = useVForm();
 
-    const  [isLoading,setIsLoading] = useState(false);
-    const  [nome,setIsNome] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [nome, setIsNome] = useState('');
+    const [planos, setPlanos] = useState<any[]>([]);
+    const [exercicios, setExercicios] = useState<any[]>([]);
 
-    
-    useEffect(()=>{
-        if(id !== 'novo'){
+    const [planoId, setPlanoId] = useState('');
+    const [exercicioId, setExercicioId] = useState('');
+
+    useEffect(() => {
+        setIsLoading(true);
+
+        // Carrega planos e exercícios
+        PlanosService.getAll()
+            .then((result) => {
+                if (!(result instanceof Error)) setPlanos(result.data);
+            });
+
+        ExerciciosService.getAll()
+            .then((result) => {
+                if (!(result instanceof Error)) setExercicios(result.data);
+            })
+            .finally(() => setIsLoading(false));
+
+        if (id !== "novo") {
             setIsLoading(true);
 
             AlunosService.getById(id)
                 .then((result) => {
                     setIsLoading(false);
-                    if (result instanceof Error ){
-                       alert(result.message)
-                       navigate('/alunos');
-                    }else{
+                    if (result instanceof Error) {
+                        alert(result.message);
+                        navigate('/alunos');
+                    } else {
                         setIsNome(result.nome!);
-                        console.log(result );
                         fomrRef.current?.setData(result);
-                    };
+                    }
                 });
-        }else{
+        } else {
             fomrRef.current?.setData({
-                nome:'',
-                email:'',
+                nome: '',
+                email: '',
                 telefone: '',
-                endereco:'',
+                endereco: '',
                 senha: '',
                 planoId: '',
-            })
+                exercicioId: '',
+            });
         }
+    }, [id]);
 
-
-    },[id]);
-
-    const handleSave = (dados : IDetalheAluno) => {
+    const handleSave = (dados: IDetalheAluno) => {
+        console.log("Plano id: " + planoId);  // Agora planoId estará correto
+        console.log("Exercicio id: " + exercicioId);  // Agora exercicioId estará correto
+    
         setIsLoading(true);
 
-
-        if (dados.nome.length <3  ) {
-            fomrRef.current?.setFieldError('nome','O campo precisa ser prenchido');
+        if (!dados.nome || dados.nome.length < 3) {
+            fomrRef.current?.setFieldError('nome', 'O nome precisa ter pelo menos 3 caracteres');
             setIsLoading(false);
-            return
+            return;
         }
-
-        if (id == 'novo'){
-
-            AlunosService.create(dados)
-                .then((result) =>  {
-                        setIsLoading(false);
-                        if(result instanceof Error){
-                            alert(result.message);
-                        }else{
-                            if(isSaveAndClose()){
-                                navigate('/alunos')
-                            }else{
-                                navigate(`/alunos/detalhe/${result}`);
-                            }
-                        }
-                })
+    
+        if (!dados.email || !dados.email.includes('@')) {
+            fomrRef.current?.setFieldError('email', 'E-mail inválido');
+            setIsLoading(false);
+            return;
+        }
+    
+        if (!dados.telefone || dados.telefone.length < 10) {
+            fomrRef.current?.setFieldError('telefone', 'Telefone inválido');
+            setIsLoading(false);
+            return;
+        }
         
-        }else{
+        if (planoId) { dados.planoId = planoId;}
+        if (exercicioId){dados.exercicioId = exercicioId;}
+        
 
-            const updatedData = { ...dados, id };  // Adiciona o id aos dados
-            console.log(updatedData);
-            
-            AlunosService.updateById(updatedData)
-                .then((result) =>  {
+        if (id === 'novo') {
+            console.log("NOVO " + dados);
+            AlunosService.create(dados)
+                .then((result) => {
                     setIsLoading(false);
-                        if(result instanceof Error){
-                            alert(result.message);
-                        }else{
-                            if(isSaveAndClose()){
-                                navigate('/alunos')
-                            }
+                    if (result instanceof Error) {
+                        alert(result.message);
+                    } else {
+                        if (isSaveAndClose()) {
+                            navigate('/alunos');
+                        } else {
+                            navigate(`/alunos/detalhe/${result}`);
                         }
-                })
+                    }
+                });
+                
+        } else {
+            
 
+            AlunosService.updateById({ ...dados, id })
+                .then((result) => {
+                    setIsLoading(false);
+                    if (result instanceof Error) {
+                        alert(result.message);
+                        console.log("erro");
+                    } else {
+                        console.log("sem erro");
+                        if (isSaveAndClose()) {
+                            navigate('/alunos');
+                        }
+                    }
+                });
         }
     };
 
-    const handleDelete = (id : string  ) => {
+    const handleDelete = (id: string) => {
         // eslint-disable-next-line no-restricted-globals
-        if (confirm( 'Realmente deseja apagar?') ){
+        if (confirm('Realmente deseja apagar?')) {
             AlunosService.deleteById(id)
-            .then(result => {
-                if (result instanceof Error){
-                    alert (result.message);
-                }else{
-                    navigate('/alunos');
-                    alert('Registro apagado com sucesso!')
-                }
-            });
+                .then((result) => {
+                    if (result instanceof Error) {
+                        alert(result.message);
+                    } else {
+                        navigate('/alunos');
+                        alert('Registro apagado com sucesso!');
+                    }
+                });
         }
-    }
-    
+    };
+
     return(
         <LayoutBaseDePagina 
             titulo={id ==='novo' ? 'Novo Aluno' : nome}
             barraDeFerramentas={
                 <FerramentasDeDetalhe
-                    mostarBotaoSalvarEFechar
                     mostarBotaoNovo={id !== 'novo'}
                     mostarBotaoApagar={id !== 'novo'}
 
                     aoClicarEmSalvar={save}
-                    aoClicarEmSalvarEFechar={saveAndClose}
                     aoClicarEmApagar={() =>handleDelete(id)}
                     aoClicarEmNovo={() => navigate('/alunos/detalhe/novo')}
                     aoClicarEmVoltar={() => navigate('/alunos')}
@@ -216,17 +234,49 @@ export const DetalheDeAluno: React.FC = () => {
 
                         <Grid container item direction="row"  spacing={2}>
                             <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
-                            <VTextField 
-                                fullWidth
-                                label="Plano" 
-                                name='planoId'
-                                disabled={isLoading}
-                                />
+                                <FormControl fullWidth disabled={isLoading}>
+                                    <InputLabel id="planoId-label">Plano</InputLabel>
+                                    <Select
+                                        labelId="planoId-label"
+                                        label="Plano"
+                                        name="planoId"
+                                        defaultValue=""
+                                        onChange={(e) => setPlanoId(e.target.value)}  // Atualizando o estado com a seleção
+                                    >
+                                        {planos.map((plano) => (
+                                            <MenuItem key={plano.id} value={plano.id}>
+                                                {plano.nomePlano}
+                                            </MenuItem>
+                                        ))}
+                                        
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                        <Grid container item direction="row"  spacing={2}>
+                            <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                                <FormControl fullWidth disabled={isLoading}>
+                                    <InputLabel id="exercicioId-label">Treino</InputLabel>
+                                    <Select
+                                        labelId="exercicioId-label"
+                                        label="Treino"
+                                        name="exercicioId"
+                                        defaultValue=""
+                                        onChange={(e) => setExercicioId(e.target.value)}  // Atualizando o estado com a seleção
+                                    >
+                                        {exercicios.map((exercicio) => (
+                                            <MenuItem key={exercicio.id} value={exercicio.id}>
+                                                {exercicio.nome}
+                                            </MenuItem>
+                                        ))}
+                                        
+                                    </Select>
+                                </FormControl>
                             </Grid>
                         </Grid>
 
+
                     </Grid>
-        
                 </Box>
             </Form> 
 

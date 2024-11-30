@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, TextField, Typography, Paper } from "@mui/material";
+import { Box, Button, TextField, Typography, Paper, Avatar } from "@mui/material";
 import { AlunosService } from "../../shared/services/api/alunos/AlunosService";
-import { ProfessoresService } from "../../shared/services/api/professores/ProfessoresService";
+import { logo192 } from "../../shared/images"; 
 
 export const Login: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -12,20 +12,33 @@ export const Login: React.FC = () => {
 
     const handleLogin = () => {
         setErro("");
-    
+        
         AlunosService.login({ email, senha }).then((result) => {
-            console.log(result); 
             if (!(result instanceof Error)) {
+                localStorage.setItem("isAuthenticated", "true");
+                localStorage.setItem("userRole", result.role);
+    
                 if (result.role === "Aluno") {
-                    navigate(`/alunos/visualizar/${result .id!}`);
+                    navigate(`/alunos/visualizar/${result.id}`);
                 } else if (result.role === "Professor") {
                     navigate(`/professores/visualizar/${result.id}`);  
                 }
+                // Força atualização do estado no componente App
+                window.location.reload(); 
             } else {
                 setErro("Login inválido! Verifique suas credenciais.");
             }
+    
+            setSenha("");
+            setEmail("");
         });
     };
+
+    const handleCadastrarClick = () => {
+        navigate('/cadastrar'); // Altere para o caminho correto do cadastro
+    };
+
+
 
     return (
         <Box
@@ -35,7 +48,10 @@ export const Login: React.FC = () => {
             height="100vh"
         >
             <Paper elevation={3} style={{ padding: "20px", maxWidth: "400px" }}>
-                <Typography variant="h5" marginBottom={2}>
+                <Box display="flex" justifyContent="center" marginBottom={2}>
+                    <Avatar alt="Logo" src={logo192} sx={{ width: 300, height: 200 }} />
+                </Box>
+                <Typography variant="h5" marginBottom={2}  >
                     Login
                 </Typography>
                 <TextField
@@ -59,13 +75,27 @@ export const Login: React.FC = () => {
                     </Typography>
                 )}
                 <Box marginTop={2} display="flex" justifyContent="flex-end">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleLogin}
-                    >
-                        Entrar
-                    </Button>
+                    
+                    <Box  margin={1}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleLogin}
+                        >
+                            Entrar
+                        </Button>
+                    </Box>
+
+                    <Box  margin={1}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleCadastrarClick}
+                        >
+                            Cadastrar
+                        </Button>
+                    </Box>
+
                 </Box>
             </Paper>
         </Box>

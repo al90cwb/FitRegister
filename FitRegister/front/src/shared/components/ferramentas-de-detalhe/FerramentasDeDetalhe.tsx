@@ -25,7 +25,6 @@ interface IFerramentasDeDetalheProps{
 
 
 
-
 }
 
 export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalheProps> = ({
