@@ -164,8 +164,8 @@ export const DetalheDeExercicio: React.FC = () => {
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <VTextField 
                                 fullWidth
-                                label="Descrição do Treino"
-                                name='descricao'
+                                label="Grupo muscular"
+                                name='grupoMuscular'
                                 disabled={isLoading}
                                 onChange={e => setIsNome(e.target.value)}
                             />
@@ -176,10 +176,12 @@ export const DetalheDeExercicio: React.FC = () => {
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <VTextField 
                                 fullWidth
-                                label="Grupo muscular"
-                                name='grupoMuscular'
+                                label="Descrição do Treino"
+                                name='descricao'
                                 disabled={isLoading}
                                 onChange={e => setIsNome(e.target.value)}
+                                multiline
+                                rows={5} 
                             />
                             </Grid>
                         </Grid>

@@ -13,7 +13,6 @@ export const VisualizarProfessor: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [professor, setProfessor] = useState<any | null>(null);
     const [exercicio, setExercicio] = useState<any | null>(null);
-    const [aluno, setAluno] = useState<any | null>(null);
 
     useEffect(() => {
         if (id) {
@@ -57,6 +56,9 @@ export const VisualizarProfessor: React.FC = () => {
             titulo={`Professor: ${professor.nome}`}
             barraDeFerramentas={
                 <FerramentasDeDetalhe
+                    mostarBotaoSalvar = {false}
+                    mostarBotaoNovo = {false}
+                    mostarBotaoApagar = {false}
                     aoClicarEmVoltar={() => navigate('/professores')}
                 />
             }

@@ -70,7 +70,11 @@ export const VisualizarAluno: React.FC = () => {
     return (
         <LayoutBaseDePagina  titulo={`Aluno: ${aluno.nome}`} >
              {userRole === "Professor" && (
-                <FerramentasDeDetalhe aoClicarEmVoltar={() => navigate('/alunos')} />
+                <FerramentasDeDetalhe
+                mostarBotaoSalvar = {false}
+                mostarBotaoNovo = {false}
+                mostarBotaoApagar = {false}
+                aoClicarEmVoltar={() => navigate('/alunos')} />
             )}
 
             <Box margin={2}>
@@ -129,10 +133,6 @@ export const VisualizarAluno: React.FC = () => {
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell><strong>Plano ID:</strong></TableCell>
-                                            <TableCell>{aluno.planoId}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
                                             <TableCell><strong>Nome do Plano:</strong></TableCell>
                                             <TableCell>{plano.nomePlano}</TableCell>
                                         </TableRow>
@@ -166,16 +166,12 @@ export const VisualizarAluno: React.FC = () => {
                                     </TableHead>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell><strong>Exercício ID:</strong></TableCell>
-                                            <TableCell>{aluno.exercicioId}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
                                             <TableCell><strong>Nome do Exercício:</strong></TableCell>
                                             <TableCell>{exercicio.nome}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell><strong>Descrição:</strong></TableCell>
-                                            <TableCell>{exercicio.descricao}</TableCell>
+                                            <TableCell style={{ whiteSpace: 'pre-line' }}>{exercicio.descricao}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell><strong>Grupo Muscular:</strong></TableCell>
