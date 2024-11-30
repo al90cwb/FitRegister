@@ -181,14 +181,6 @@ export const VisualizarAluno: React.FC = () => {
                                             <TableCell><strong>Grupo Muscular:</strong></TableCell>
                                             <TableCell>{exercicio.grupoMuscular}</TableCell>
                                         </TableRow>
-                                        <TableRow>
-                                            <TableCell><strong>Repetições:</strong></TableCell>
-                                            <TableCell>{exercicio.repeticoes}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell><strong>Tempo de Descanso:</strong></TableCell>
-                                            <TableCell>{exercicio.tempoDescanco}</TableCell>
-                                        </TableRow>
                                     </TableBody>
                                 </Table>
                             </TableContainer>

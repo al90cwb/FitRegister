@@ -21,6 +21,9 @@ export const DetalheDeAluno: React.FC = () => {
     const [planos, setPlanos] = useState<any[]>([]);
     const [exercicios, setExercicios] = useState<any[]>([]);
 
+    const [planoId, setPlanoId] = useState('');
+    const [exercicioId, setExercicioId] = useState('');
+
     useEffect(() => {
         setIsLoading(true);
 
@@ -64,7 +67,9 @@ export const DetalheDeAluno: React.FC = () => {
     }, [id]);
 
     const handleSave = (dados: IDetalheAluno) => {
-        console.log(dados.planoId);
+        console.log("Plano id: " + planoId);  // Agora planoId estará correto
+        console.log("Exercicio id: " + exercicioId);  // Agora exercicioId estará correto
+    
         setIsLoading(true);
 
         if (!dados.nome || dados.nome.length < 3) {
@@ -84,8 +89,13 @@ export const DetalheDeAluno: React.FC = () => {
             setIsLoading(false);
             return;
         }
+        
+        if (planoId) { dados.planoId = planoId;}
+        if (exercicioId){dados.exercicioId = exercicioId;}
+        
 
         if (id === 'novo') {
+            console.log("NOVO " + dados);
             AlunosService.create(dados)
                 .then((result) => {
                     setIsLoading(false);
@@ -101,12 +111,16 @@ export const DetalheDeAluno: React.FC = () => {
                 });
                 
         } else {
+            
+
             AlunosService.updateById({ ...dados, id })
                 .then((result) => {
                     setIsLoading(false);
                     if (result instanceof Error) {
                         alert(result.message);
+                        console.log("erro");
                     } else {
+                        console.log("sem erro");
                         if (isSaveAndClose()) {
                             navigate('/alunos');
                         }
@@ -227,6 +241,7 @@ export const DetalheDeAluno: React.FC = () => {
                                         label="Plano"
                                         name="planoId"
                                         defaultValue=""
+                                        onChange={(e) => setPlanoId(e.target.value)}  // Atualizando o estado com a seleção
                                     >
                                         {planos.map((plano) => (
                                             <MenuItem key={plano.id} value={plano.id}>
@@ -238,6 +253,29 @@ export const DetalheDeAluno: React.FC = () => {
                                 </FormControl>
                             </Grid>
                         </Grid>
+                        <Grid container item direction="row"  spacing={2}>
+                            <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                                <FormControl fullWidth disabled={isLoading}>
+                                    <InputLabel id="exercicioId-label">Treino</InputLabel>
+                                    <Select
+                                        labelId="exercicioId-label"
+                                        label="Treino"
+                                        name="exercicioId"
+                                        defaultValue=""
+                                        onChange={(e) => setExercicioId(e.target.value)}  // Atualizando o estado com a seleção
+                                    >
+                                        {exercicios.map((exercicio) => (
+                                            <MenuItem key={exercicio.id} value={exercicio.id}>
+                                                {exercicio.nome}
+                                            </MenuItem>
+                                        ))}
+                                        
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+
+
                     </Grid>
                 </Box>
             </Form> 

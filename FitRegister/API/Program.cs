@@ -132,6 +132,9 @@ app.MapPut("/api/aluno/alterar", async (AppDataContext ctx, Aluno alunoUpdt) =>
     aluno.Telefone = alunoUpdt.Telefone ?? aluno.Telefone;
     aluno.Email = alunoUpdt.Email ?? aluno.Email;
     aluno.Senha = alunoUpdt.Senha ?? aluno.Senha;
+    
+    aluno.PlanoId = alunoUpdt.PlanoId ?? aluno.PlanoId;
+    aluno.ExercicioId = alunoUpdt.ExercicioId ?? aluno.ExercicioId;
 
     ctx.Alunos.Update(aluno);
     await ctx.SaveChangesAsync();
